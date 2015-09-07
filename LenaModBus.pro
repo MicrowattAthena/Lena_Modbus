@@ -14,9 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    eventhandler.cpp
+    modbusmanagement.cpp \
+    modbusprotocols.cpp
+
 
 HEADERS  += widget.h \
-    eventhandler.h
+    modbusmanagement.h \
+    modbusprotocols.h \
+    main.h
+
 
 FORMS    += widget.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -lmodbus
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -lmodbus
+else:unix: LIBS += -L$$PWD/../../../usr/local/lib/ -lmodbus
+
+INCLUDEPATH += $$PWD/../../../usr/local/include
+DEPENDPATH += $$PWD/../../../usr/local/include

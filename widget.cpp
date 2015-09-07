@@ -18,3 +18,4 @@ void Widget::on_pushButton_clicked()
     ui->lineEdit->setText("Hello World!");
 
 }
+

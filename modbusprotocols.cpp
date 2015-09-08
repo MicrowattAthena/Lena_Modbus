@@ -31,7 +31,7 @@ else {
 
 
 int setRTUmode(void){
-int success; int serialmode;
+int success;
  modbus_set_debug(ctx,TRUE);
 
 success = modbus_rtu_set_serial_mode(ctx, MODBUS_RTU_RS232);
@@ -51,8 +51,10 @@ else {
 }
 
 int settimeouts(void){
-  modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
-  modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
+
+    //Causes Memory Access Violation?? Not sure on cause yet
+  //modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
+  //modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
 return 0;
 }
 
@@ -70,24 +72,40 @@ return -1;
 }
 
 
-int readaddresses(){
+int readaddresses(int initialaddress,int numberofregisters){
 
-    uint16_t tab_reg[64];
     int rc;
     int i;
+    uint16_t register_buffer[64];
 
-    rc = modbus_read_registers(ctx, 256, 10, tab_reg);
+    rc = modbus_read_registers(ctx, initialaddress, numberofregisters, register_buffer);
     if (rc == -1) {
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         return -1;
         }else{
+        // do something
         for (i=0; i < rc; i++) {
-            printf("reg[%d]=%d (0x%X)\n", i, tab_reg[i], tab_reg[i]);
+            printf("reg[%d]=%d (0x%X)\n", i, register_buffer[i], register_buffer[i]);
             }
         }
     return 0;
 }
 
+int readcoils(int initialaddress, int numberofcoils){
+
+    int rc;
+    uint8_t coil_buffer[64];
+
+    rc = modbus_read_bits(ctx,initialaddress,numberofcoils, coil_buffer);
+    if (rc== -1){
+        fprintf(stderr, "%s\n", modbus_strerror(errno));
+        return -1;
+    }else{
+        // do something
+        return 0;
+    }
+
+}
 
 int setmodbusslave(int id){
     modbus_set_slave(ctx,id);
@@ -103,6 +121,7 @@ int report_slave_ID(){
     if (rc > 1) {
         printf("Run Status Indicator: %s\n", slaveresponse_bytes[1] ? "ON" : "OFF");
     }
+    return 0;
 }
 }
 

@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "modbusmanagement.h"
+#include "masterdb.h"
 #include <QApplication>
 
 
@@ -16,7 +17,15 @@ int main(int argc, char *argv[])
     //Initialise Modbus
 
     if (initialisemodbus()==0){
-     testread();
+        initialiseDB();
+        testread();
+
+        //on a continousloop
+        //poll slaves
+        //process update queue
+        //update display
+
+        //interrupt when user makes change on display
     }
 
     return a.exec();

@@ -37,7 +37,7 @@ typedef enum {
     REG_ENG_MAX
 } EngineRegs;
 
-// DC_SYSTEN registers
+// DC_SYSTEM registers
 typedef enum {
     REG_DCSYS_ALT1CURRENT = DCSYSTEM_BASE,      // Alternator 1 current
     REG_DCSYS_ALT2CURRENT,                      // Alternator 2 current
@@ -197,14 +197,14 @@ typedef enum {
 
 // RTC registers
 typedef enum {
-    REG_RTC_SECS = RTC_BASE,                    // Seconds (0-59)
-    REG_RTC_MINS,                               // Minutes (0-59)
-    REG_RTC_HOURS,                              // Hours (0-23)
-    REG_RTC_DAY,                                // Day of the month (1-31)
-    REG_RTC_MONTH,                              // Month (1-12)
-    REG_RTC_YEAR,                               // Year
-    REG_RTC_APPLY,                              // Apply RTC settings
-    REG_RTC_MAX
+    REG_RTC_LCD_SECS = RTC_BASE,                    // Seconds (0-59)
+    REG_RTC_LCD_MINS,                               // Minutes (0-59)
+    REG_RTC_LCD_HOURS,                              // Hours (0-23)
+    REG_RTC_LCD_DAY,                                // Day of the month (1-31)
+    REG_RTC_LCD_MONTH,                              // Month (1-12)
+    REG_RTC_LCD_YEAR,                               // Year
+    REG_RTC_LCD_APPLY,                              // Apply RTC settings
+    REG_RTC_LCD_MAX
 } RTCRegs;
 
 // GYRO registers

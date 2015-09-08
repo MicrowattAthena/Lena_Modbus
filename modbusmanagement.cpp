@@ -9,10 +9,11 @@ int initialisemodbus(void){
     initialiseRTU();
     setRTUmode();
     settimeouts();
-    RTU_connect();
-
-
-    return 0;
+    if (RTU_connect()==0){
+        return 0;
+    }else{
+        return -1;
+    }
 
 }
 

@@ -15,7 +15,9 @@ int main(int argc, char *argv[])
 
     //Initialise Modbus
 
-    initialisemodbus();
-    testread();
+    if (initialisemodbus()==0){
+     testread();
+    }
+
     return a.exec();
 }

@@ -1,13 +1,14 @@
 #include "modbusprotocols.h"
+#include <stdio.h>
 #include <modbus/modbus-rtu.h>
 #include <modbus/modbus.h>
-#include <stdio.h>
 
 #define DEBUG_ENABLED
 #define TIMEOUTDURATION 2.0
 
 
 extern "C" {
+
 modbus_t *ctx;
 
 int errno;
@@ -44,12 +45,13 @@ else {
 #ifdef DEBUG_ENABLED
  fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
 #endif
+
     return -1;
     }
 }
 
 int settimeouts(void){
-    modbus_set_byte_timeout(ctx,  TIMEOUTDURATION,0);
+  modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
   modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
 return 0;
 }

@@ -1,0 +1,27 @@
+Creation of master DB
+
+///
+Some Variables are Linked (!)
+
+RTC should not be stored
+
+ALL LCD Values are shared
+(except maybe mood lighting - currently lcd only controls one set, but two will be installed: will they be individually controlled?)
+
+General - Unique?
+
+ALL EC Values are unique
+///
+
+
+TO DO -
+
+Manage EC - Simplest to do.
+
+One EC - Saloon
+One EC - Bedroom
+
+Read all variables and store in DB.
+
+on poll, if value has changed, add to queue/process now (benefits of each?)
+

@@ -4,9 +4,9 @@ extern "C" {
 
 int initialisemodbus(void);
 int testread(void);
-int readLCDslave(int);
-int readgeneralslave(int);
-int readECslave(int);
+int readLCDslave(int, char);
+int readgeneralslave(int, char);
+int readECslave(int, char);
 #endif // MODBUSMANAGEMENT_H
 
 }

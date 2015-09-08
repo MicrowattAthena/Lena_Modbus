@@ -10,7 +10,8 @@
 extern "C" {
 
 modbus_t *ctx;
-
+uint16_t register_buffer[64];
+uint8_t coil_buffer[64];
 int errno;
 
 int initialiseRTU(void){
@@ -75,33 +76,28 @@ return -1;
 int readaddresses(int initialaddress,int numberofregisters){
 
     int rc;
-    int i;
-    uint16_t register_buffer[64];
+
 
     rc = modbus_read_registers(ctx, initialaddress, numberofregisters, register_buffer);
     if (rc == -1) {
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         return -1;
         }else{
-        // do something
-        for (i=0; i < rc; i++) {
-            printf("reg[%d]=%d (0x%X)\n", i, register_buffer[i], register_buffer[i]);
-            }
-        }
-    return 0;
+       return 0;
+    }
 }
 
 int readcoils(int initialaddress, int numberofcoils){
 
     int rc;
-    uint8_t coil_buffer[64];
+
 
     rc = modbus_read_bits(ctx,initialaddress,numberofcoils, coil_buffer);
     if (rc== -1){
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         return -1;
     }else{
-        // do something
+
         return 0;
     }
 

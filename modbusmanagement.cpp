@@ -1,4 +1,5 @@
 #include <modbusmanagement.h>
+#include <masterdb.h>
 #include <stdlib.h>
 #include <modbusprotocols.h>
 #include <LCD/lcd_registers.h>
@@ -21,8 +22,6 @@ int initialisemodbus(void){
 
 }
 
-//Reads Data from all slaves and stores internally
-
 int testread(void){
     setmodbusslave(1);
     readaddresses(256,10);
@@ -30,7 +29,7 @@ int testread(void){
     return 0;
     }
 
-int readLCDslave(int IDnumber){
+int readLCDslave(int IDnumber, char slavename){
     setmodbusslave((IDnumber));
 
     //Do something with each read!
@@ -51,22 +50,23 @@ int readLCDslave(int IDnumber){
     return 0;
 }
 
-int readgeneralslave(int IDnumber){
+int readgeneralslave(int IDnumber, char slavename){
     setmodbusslave(IDnumber);
-
     readaddresses(REGS_GENERAL_BASE, REG_GENERAL_MAX - REGS_GENERAL_BASE);
+    writeDB(GENERAL_BOARD,slavename,REGISTERS);
     readcoils(COILS_GENERAL_BASE,COIL_GENERAL_MAX - COILS_GENERAL_BASE);
-    //Do Something with each read!
+    writeDB(GENERAL_BOARD,slavename,COILS);
     return 0;
 }
 
-int readECslave(int IDnumber){
+int readECslave(int IDnumber, char slavename){
+
     setmodbusslave(IDnumber);
-
     readaddresses(REGS_ENVC_BASE,REG_ENVC_MAX - REGS_ENVC_BASE);
+    writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
     readcoils(COILS_ENVC_BASE,COIL_ENVC_MAX - COILS_ENVC_BASE);
-
-    //Do something with each read!
+    writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
+    //write request to masterDB. using global buffer.
     return 0;
 }
 

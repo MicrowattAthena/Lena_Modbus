@@ -16,17 +16,16 @@ int main(int argc, char *argv[])
 
     //Initialise Modbus
 
-    if (initialisemodbus()==0){
+   if (initialisemodbus()==0){
+        //set RTC for slaves
         initialiseDB();
-        testread();
-
+    }
         //on a continousloop
-        //poll slaves
-        //process update queue
-        //update display
+             //poll slaves
+             //process update queue
+             //update display
 
         //interrupt when user makes change on display
-    }
 
     return a.exec();
 }

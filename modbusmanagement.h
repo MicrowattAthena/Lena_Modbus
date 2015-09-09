@@ -7,6 +7,7 @@ int testread(void);
 int readLCDslave(int, char);
 int readgeneralslave(int, char);
 int readECslave(int, char);
+int writeLCDtime(int);
 #endif // MODBUSMANAGEMENT_H
 
 }

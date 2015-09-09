@@ -13,6 +13,20 @@ extern "C" {
 #define SALOON 's'
 #define REGISTERS 'r'
 #define COILS 'c'
+#define ENGINE 'E'
+#define DCSYS 'D'
+#define ACSYS 'A'
+#define HVAC 'H'
+#define TANKS 'T'
+#define RR 'R'
+#define GPS 'G'
+#define SONAR 'S'
+#define LIGHTS 'L'
+#define LCD 'C'
+#define GYRO 'Y'
+#define ALARM 'M'
+#define WARNING 'W'
+
 
 int initialiseDB();
 int writeDB(char, char, char);

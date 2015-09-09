@@ -191,12 +191,12 @@ typedef enum {
 // LCD registers
 typedef enum {
     REG_LCD_ACCEPTALARMS = LCD_BASE,            // Accept alarms
-    REG_LCD_STDBYDISP,                          // Active standby display ID
+   // REG_LCD_STDBYDISP, WRITE ONLY                          // Active standby display ID
     REG_LCD_MAX
 } LCDRegs;
 
-// RTC registers
-typedef enum {
+// RTC registers WRITE ONLY
+/*typedef enum {
     REG_RTC_LCD_SECS = RTC_BASE,                    // Seconds (0-59)
     REG_RTC_LCD_MINS,                               // Minutes (0-59)
     REG_RTC_LCD_HOURS,                              // Hours (0-23)
@@ -205,7 +205,7 @@ typedef enum {
     REG_RTC_LCD_YEAR,                               // Year
     REG_RTC_LCD_APPLY,                              // Apply RTC settings
     REG_RTC_LCD_MAX
-} RTCRegs;
+} RTCRegs; */
 
 // GYRO registers
 typedef enum {

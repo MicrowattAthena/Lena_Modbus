@@ -14,10 +14,10 @@ int initialisemodbus(void){
     initialiseRTU();
     setRTUmode();
     settimeouts();
-    if (RTU_connect()==0){
-        return 0;
+    if (RTU_connect()==1){
+        return 1;
     }else{
-        return -1;
+        return 0;
     }
 
 }
@@ -26,49 +26,68 @@ int testread(void){
     setmodbusslave(1);
     readaddresses(256,10);
 
-    return 0;
+    return 1;
     }
 
 int readLCDslave(int IDnumber, char slavename){
+
+    //Attempts to read from each block of registers
+    //If successful, writes the read buffer to master DB
     setmodbusslave((IDnumber));
 
-    //Do something with each read!
-    readaddresses(ENGINE_BASE,REG_ENG_MAX - ENGINE_BASE);
-    readaddresses(DCSYSTEM_BASE,REG_DCSYS_MAX - DCSYSTEM_BASE);
-    readaddresses(ACSYSTEM_BASE,REG_ACSYS_MAX - ACSYSTEM_BASE);
-    readaddresses(HVAC_BASE,REG_HVAC_MAX - HVAC_BASE);
-    readaddresses(TANKS_BASE,REG_TANKS_MAX - TANKS_BASE);
-    readaddresses(RR_BASE,REG_RR_MAX - RR_BASE);
-    readaddresses(GPS_BASE,REG_GPS_MAX -GPS_BASE);
-    readaddresses(SONAR_BASE,REG_SONAR_MAX - SONAR_BASE);
-    readaddresses(LIGHTS_BASE,REG_LIGHTS_MAX-LIGHTS_BASE);
-    readaddresses(LCD_BASE,REG_LCD_MAX - LCD_BASE);
-    readaddresses(RTC_BASE,REG_RTC_LCD_MAX - RTC_BASE);
-    readaddresses(GYRO_BASE,REG_GYRO_MAX - GYRO_BASE);
-    readcoils(ALARMS_BASE,COIL_ALRM_MAX - ALARMS_BASE);
-    readcoils(WARNINGS_BASE,COIL_WARN_MAX - WARNINGS_BASE);
-    return 0;
+    if (readaddresses(ENGINE_BASE -1,REG_ENG_MAX - ENGINE_BASE))
+       writeDB(LCD_CONTROL,slavename, ENGINE);
+    if (readaddresses(DCSYSTEM_BASE - 1,REG_DCSYS_MAX - DCSYSTEM_BASE))
+       writeDB(LCD_CONTROL,slavename, DCSYS );
+    if (readaddresses(ACSYSTEM_BASE - 1,REG_ACSYS_MAX - ACSYSTEM_BASE))
+       writeDB(LCD_CONTROL,slavename, ACSYS);
+    if (readaddresses(HVAC_BASE - 1,REG_HVAC_MAX - HVAC_BASE))
+       writeDB(LCD_CONTROL,slavename, HVAC);
+    if (readaddresses(TANKS_BASE- 1,REG_TANKS_MAX - TANKS_BASE))
+       writeDB(LCD_CONTROL,slavename,TANKS );
+    if (readaddresses(RR_BASE- 1,REG_RR_MAX - RR_BASE))
+       writeDB(LCD_CONTROL,slavename, RR);
+    if (readaddresses(GPS_BASE- 1,REG_GPS_MAX -GPS_BASE))
+       writeDB(LCD_CONTROL,slavename,GPS );
+    if (readaddresses(SONAR_BASE- 1,REG_SONAR_MAX - SONAR_BASE))
+       writeDB(LCD_CONTROL,slavename,SONAR );
+    if (readaddresses(LIGHTS_BASE- 1,REG_LIGHTS_MAX-LIGHTS_BASE))
+       writeDB(LCD_CONTROL,slavename,LIGHTS );
+    if (readaddresses(LCD_BASE- 1,REG_LCD_MAX - LCD_BASE))
+       writeDB(LCD_CONTROL,slavename,LCD );
+    if (readaddresses(GYRO_BASE- 1,REG_GYRO_MAX - GYRO_BASE))
+       writeDB(LCD_CONTROL,slavename,GYRO );
+    if (readcoils(ALARMS_BASE- 1,COIL_ALRM_MAX - ALARMS_BASE))
+       writeDB(LCD_CONTROL,slavename,ALARM );
+    if (readcoils(WARNINGS_BASE- 1,COIL_WARN_MAX - WARNINGS_BASE))
+       writeDB(LCD_CONTROL,slavename,WARNING );
+    return 1;
 }
 
 int readgeneralslave(int IDnumber, char slavename){
     setmodbusslave(IDnumber);
-    readaddresses(REGS_GENERAL_BASE, REG_GENERAL_MAX - REGS_GENERAL_BASE);
-    writeDB(GENERAL_BOARD,slavename,REGISTERS);
-    readcoils(COILS_GENERAL_BASE,COIL_GENERAL_MAX - COILS_GENERAL_BASE);
-    writeDB(GENERAL_BOARD,slavename,COILS);
-    return 0;
+  if (readaddresses(REGS_GENERAL_BASE- 1, REG_GENERAL_MAX - REGS_GENERAL_BASE))
+       writeDB(GENERAL_BOARD,slavename,REGISTERS);
+   if (readcoils(COILS_GENERAL_BASE- 1,COIL_GENERAL_MAX - COILS_GENERAL_BASE))
+       writeDB(GENERAL_BOARD,slavename,COILS);
+    return 1;
 }
 
 int readECslave(int IDnumber, char slavename){
 
     setmodbusslave(IDnumber);
-    readaddresses(REGS_ENVC_BASE,REG_ENVC_MAX - REGS_ENVC_BASE);
-    writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
-    readcoils(COILS_ENVC_BASE,COIL_ENVC_MAX - COILS_ENVC_BASE);
-    writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
-    //write request to masterDB. using global buffer.
-    return 0;
+   if (readaddresses(REGS_ENVC_BASE- 1,REG_ENVC_MAX - REGS_ENVC_BASE))
+       writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
+   if (readcoils(COILS_ENVC_BASE- 1,COIL_ENVC_MAX - COILS_ENVC_BASE))
+       writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
+    return 1;
 }
 
+int writeLCDtime(int IDNumber){
+    setmodbusslave(IDNumber);
+    //Construct RTC write buffers
+    //Write to LCDS
+    return 1;
+}
 
 }

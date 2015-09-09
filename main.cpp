@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     //Initialise Modbus
 
-   if (initialisemodbus()==0){
+   if (initialisemodbus()==1){
         //set RTC for slaves
         initialiseDB();
     }

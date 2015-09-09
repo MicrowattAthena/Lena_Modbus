@@ -35,7 +35,7 @@ typedef enum {
 typedef enum {
     COIL_OCCUPIED = COILS_ENVC_BASE,
     COIL_BOOST,
-    COIL_HEATING,
+  //  COIL_HEATING, WRITE ONLY
     COIL_ENVC_MAX
 } EnvCtrlCoils;
 

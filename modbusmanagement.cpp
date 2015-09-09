@@ -5,16 +5,15 @@
 #include <LCD/lcd_registers.h>
 #include <General/general_registers.h>
 #include <EC/EC_registers.h>
-
 extern "C" {
 
 //Sets up and Connects Modbus
 int initialisemodbus(void){
-
     initialiseRTU();
     setRTUmode();
     settimeouts();
     if (RTU_connect()==1){
+
         return 1;
     }else{
         return 0;
@@ -66,10 +65,19 @@ int readLCDslave(int IDnumber, char slavename){
 
 int readgeneralslave(int IDnumber, char slavename){
     setmodbusslave(IDnumber);
-  if (readaddresses(REGS_GENERAL_BASE- 1, REG_GENERAL_MAX - REGS_GENERAL_BASE))
-       writeDB(GENERAL_BOARD,slavename,REGISTERS);
-   if (readcoils(COILS_GENERAL_BASE- 1,COIL_GENERAL_MAX - COILS_GENERAL_BASE))
-       writeDB(GENERAL_BOARD,slavename,COILS);
+   // Different Engine Variations have different readable addresses.
+   // for example, engine does not use ADC channels 1-8.
+    switch (slavename) {
+    case GENERAL_ENGINE:
+        if (readaddresses(REG_ANALOG_IN12 - 1, REG_GENERAL_MAX - REG_ANALOG_IN12))
+             writeDB(GENERAL_BOARD,slavename,REGISTERS);
+         if (readcoils(COILS_GENERAL_BASE- 1,COIL_GENERAL_MAX - COILS_GENERAL_BASE))
+             writeDB(GENERAL_BOARD,slavename,COILS);
+        break;
+
+    default:
+        break;
+    }
     return 1;
 }
 

@@ -31,8 +31,6 @@ HEADERS  += widget.h \
 
 FORMS    += widget.ui
 
-
-
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -lmodbus
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -lmodbus
 else:unix: LIBS += -L$$PWD/../../../usr/local/lib/ -lmodbus

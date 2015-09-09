@@ -26,9 +26,12 @@ extern "C" {
 #define GYRO 'Y'
 #define ALARM 'M'
 #define WARNING 'W'
+#define GENERAL_ENGINE '1'
 
 
-int initialiseDB();
+int pollslaves();
+int managelcd();
+int senddatatoGUI();
 int writeDB(char, char, char);
 
 #endif // masterDB_H

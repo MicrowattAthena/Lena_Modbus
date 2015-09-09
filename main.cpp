@@ -14,18 +14,23 @@ int main(int argc, char *argv[])
     w.show();
 
 
+
     //Initialise Modbus
 
    if (initialisemodbus()==1){
-        //set RTC for slaves
-        initialiseDB();
-    }
-        //on a continousloop
-             //poll slaves
-             //process update queue
-             //update display
 
-        //interrupt when user makes change on display
+       //on a continousloop
+            //poll slaves
+            //update LCDs
+            //set alarm states for LCD??
+            //update display
+
+       while(1){
+        pollslaves();
+        managelcd();
+        senddatatoGUI();
+        }
+    }
 
     return a.exec();
 }

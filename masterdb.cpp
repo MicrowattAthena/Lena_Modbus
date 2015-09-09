@@ -3,6 +3,7 @@
 #include "modbusprotocols.h"
 #include "EC/EC_registers.h"
 #include "LCD/lcd_registers.h"
+#include "General/general_registers.h"
 extern "C" {
 
 //0 is the terminating character - illegal modbus data address.
@@ -10,8 +11,8 @@ extern "C" {
     const int LCDSlaveIDs[] = { 1,2, 0 };
     const char LCDSlaveName[] = { SALOON, BEDROOM, '0' };
 
-    const int GeneralSlaveIDs[] = { 0 };
-    const char GeneralSlaveName[] = {'0'};
+    const int GeneralSlaveIDs[] = { 5, 0 };
+    const char GeneralSlaveName[] = {GENERAL_ENGINE, '0'};
 
     const int ECSlaveIDs[] = {3,4,0 };
    const char ECSlaveName[] = { SALOON, BEDROOM, '0'};
@@ -54,13 +55,14 @@ struct database {
    int LCD_Bedroom_Alarm[COIL_ALRM_MAX - ALARMS_BASE];
    int LCD_Bedroom_Warning[COIL_WARN_MAX - WARNINGS_BASE];
 
+   int General_Engine_Registers[REG_GENERAL_MAX - REG_ANALOG_IN12];
+   int General_Engine_Coils[COIL_GENERAL_MAX - COILS_GENERAL_BASE];
 };
 
 struct database MasterDB;
 
-int initialiseDB () {
+int pollslaves() {
 //create master Database
-
     // check slave ids and types of slave
    for (int i = 0; LCDSlaveIDs[i] != 0;i++)
         //pass ID to modbusmanagement
@@ -77,6 +79,20 @@ int initialiseDB () {
     return 1;
 }
 
+int managelcd() {
+    //Some LCD Data is obtained from other slave devices.
+    //The master DB must be updated with these values, and then they must be written to the LCD slaves.
+
+
+    return 1;
+}
+
+int senddatatoGUI() {
+    // The GUI will display some information from the DB. This information needs to be sent periodically.
+    //This could occur whenever a full poll occurs, or could be run on a seperate thread on a fixed time schedule (?)
+    //Ask Ian
+    return 1;
+}
 
 int writeDB(char slavetype, char slavename, char addresstype){
 
@@ -129,7 +145,23 @@ int writeDB(char slavetype, char slavename, char addresstype){
         break;
 
     case GENERAL_BOARD:
-        //code TO DO!
+        switch (slavename) {
+        case GENERAL_ENGINE:
+            switch (addresstype) {
+            case REGISTERS:
+                for (i = REG_ANALOG_IN12 - 1; i<= (REG_GENERAL_MAX - REG_ANALOG_IN12); i++)
+                    MasterDB.General_Engine_Registers[i] = register_buffer[i];
+                break;
+            case COILS:
+                for (i= 0; i <= (COIL_GENERAL_MAX - COILS_GENERAL_BASE); i++)
+                    MasterDB.General_Engine_Coils[i] = coil_buffer[i];
+                break;
+            default:
+                //SHOULDNT HAPPEN
+                break;
+            }
+        }
+
         break;
 
 

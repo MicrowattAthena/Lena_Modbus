@@ -31,11 +31,11 @@ typedef enum {
     REG_AIN8_FSD,
 
     REG_BAT_FSD,
-    REG_SRV_BAT_CAP,
-    REG_SRV_BAT_LOW_ALRM,
-    REG_SRV_BLG_PMP_SECS,
-    REG_ENG_RUN_MINS,
-    REG_AHR_INOUT_ACC,
+    REG_SRV_BAT_CAP, // Not Implemented Yet
+    REG_SRV_BAT_LOW_ALRM, // Not Implemented Yet
+    REG_SRV_BLG_PMP_SECS, // Not Implemented Yet
+    REG_ENG_RUN_MINS, // Not Implemented Yet
+    REG_AHR_INOUT_ACC, // Not Implemented Yet
 
     REG_HEATING_MODE,
     REG_HEATING_THRESH,

@@ -33,9 +33,8 @@ else {
 
 int setRTUmode(void){
 int success;
- modbus_set_debug(ctx,TRUE);
 
-success = modbus_rtu_set_serial_mode(ctx, MODBUS_RTU_RS232);
+success = modbus_rtu_set_serial_mode(ctx, MODBUS_RTU_RS485);
 if (success == 0) {
 #ifdef DEBUG_ENABLED
     printf("RTU Set Successfully\n");
@@ -53,13 +52,14 @@ if (success == 0) {
 int settimeouts(void){
 
     //Causes Memory Access Violation?? Not sure on cause yet
-  //modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
-   //modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
+  modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
+  modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
 return 1;
 }
 
 
 int RTU_connect(void){
+  modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_PROTOCOL);
 if (modbus_connect(ctx)==0){
     return 1;
 }else{

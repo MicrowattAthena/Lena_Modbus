@@ -63,6 +63,7 @@ int readLCDslave(int IDnumber, char slavename){
     return 1;
 }
 
+
 int readgeneralslave(int IDnumber, char slavename){
     setmodbusslave(IDnumber);
    // Different Engine Variations have different readable addresses.

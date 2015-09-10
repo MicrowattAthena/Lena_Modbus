@@ -29,10 +29,12 @@ extern "C" {
 #define GENERAL_ENGINE '1'
 
 
-int pollslaves();
+int initialiseDB();
+int resetflags();
 int managelcd();
 int senddatatoGUI();
 int writeDB(char, char, char);
-
+int pollslaves();
+int compareDB(char, char, char);
 #endif // masterDB_H
 }

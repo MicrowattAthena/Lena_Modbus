@@ -100,40 +100,40 @@ struct database MasterDB;
 int resetflags() {
     int i;
     for (i=REGS_ENVC_BASE; i <= REG_ENVC_MAX; i++){
-        MasterDB.EC_Bedroom_Registers_Flag[i]= 0;
-        MasterDB.EC_Saloon_Registers_Flag[i] = 0;
+        MasterDB.EC_Bedroom_Registers_Flag[i - REGS_ENVC_BASE]= 0;
+        MasterDB.EC_Saloon_Registers_Flag[i - REGS_ENVC_BASE] = 0;
     }
     for (i= REG_ANALOG_IN12; i<= REG_GENERAL_MAX; i++)
-        MasterDB.General_Engine_Registers_Flag[i]=0;
+        MasterDB.General_Engine_Registers_Flag[i - REG_ANALOG_IN12]=0;
     for (i= COILS_GENERAL_BASE; i <= COIL_GENERAL_MAX; i++)
-        MasterDB.General_Engine_Coils_Flag[i]=0;
+        MasterDB.General_Engine_Coils_Flag[i - COILS_GENERAL_BASE]=0;
 
     for (i= ENGINE_BASE; i<= REG_ENG_MAX; i++)
-        MasterDB.LCD_Saloon_Engine_Flag[i]=0;
+        MasterDB.LCD_Saloon_Engine_Flag[i - ENGINE_BASE]=0;
     for (i = DCSYSTEM_BASE; i<= REG_DCSYS_MAX; i++)
-        MasterDB.LCD_Saloon_DCsys_Flag[i]=0;
+        MasterDB.LCD_Saloon_DCsys_Flag[i - DCSYSTEM_BASE]=0;
     for (i= ACSYSTEM_BASE; i<= REG_ACSYS_MAX; i++)
-        MasterDB.LCD_Saloon_ACsys_Flag[i]=0;
+        MasterDB.LCD_Saloon_ACsys_Flag[i - ACSYSTEM_BASE]=0;
     for (i=HVAC_BASE; i<= REG_HVAC_MAX; i++)
-        MasterDB.LCD_Saloon_HVAC_Flag[i]=0;
+        MasterDB.LCD_Saloon_HVAC_Flag[i - HVAC_BASE]=0;
     for (i=TANKS_BASE; i<= REG_TANKS_MAX; i++)
-        MasterDB.LCD_Saloon_Tanks_Flag[i]=0;
+        MasterDB.LCD_Saloon_Tanks_Flag[i - TANKS_BASE]=0;
     for (i= RR_BASE; i<= REG_RR_MAX; i++)
-        MasterDB.LCD_Saloon_RR_Flag[i]=0;
+        MasterDB.LCD_Saloon_RR_Flag[i - RR_BASE]=0;
     for (i=GPS_BASE; i <= REG_GPS_MAX; i++)
-        MasterDB.LCD_Saloon_GPS_Flag[i]=0;
+        MasterDB.LCD_Saloon_GPS_Flag[i - GPS_BASE]=0;
     for (i=SONAR_BASE; i<= REG_SONAR_MAX; i++)
-        MasterDB.LCD_Saloon_Sonar_Flag[i]= 0;
+        MasterDB.LCD_Saloon_Sonar_Flag[i - SONAR_BASE]= 0;
     for (i=LIGHTS_BASE; i<= REG_LIGHTS_MAX; i++)
-        MasterDB.LCD_Saloon_Lights_Flag[i]=0;
+        MasterDB.LCD_Saloon_Lights_Flag[i - LIGHTS_BASE]=0;
     for (i=LCD_BASE; i<= REG_LCD_MAX; i++ )
-        MasterDB.LCD_Saloon_LCD_Flag[i]=0;
+        MasterDB.LCD_Saloon_LCD_Flag[i - LCD_BASE]=0;
     for (i=GYRO_BASE; i<= REG_GYRO_MAX; i++)
-        MasterDB.LCD_Saloon_Gyro_Flag[i]= 0;
+        MasterDB.LCD_Saloon_Gyro_Flag[i - GYRO_BASE]= 0;
     for (i=ALARMS_BASE; i<=COIL_ALRM_MAX; i++)
-        MasterDB.LCD_Saloon_Alarm_Flag[i] = 0;
+        MasterDB.LCD_Saloon_Alarm_Flag[i - ALARMS_BASE] = 0;
     for (i=WARNINGS_BASE; i<=COIL_WARN_MAX; i++)
-        MasterDB.LCD_Saloon_Warning_Flag[i]=0;
+        MasterDB.LCD_Saloon_Warning_Flag[i - WARNINGS_BASE]=0;
     return 1;
 }
 
@@ -160,9 +160,15 @@ int pollslaves() {
 
 
 int managelcd() {
-    //Some LCD Data is obtained from other slave devices.
-    //The master DB must be updated with these values, and then they must be written to the LCD slaves.
+    //Most of the LCD Data is obtained from other slave devices.
+    //The program needs to set the correct values to the LCD DB and then rewrite to the LCDs.
 
+    buildlcdDB();
+
+    return 1;
+}
+
+int buildlcdDB() {
 
     return 1;
 }

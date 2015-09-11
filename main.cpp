@@ -4,7 +4,6 @@
 #include <QApplication>
 
 
-
 int main(int argc, char *argv[])
 {
 
@@ -17,7 +16,7 @@ int main(int argc, char *argv[])
 
     //Initialise Modbus
 
-   if (initialisemodbus()==1){
+   if (initialisemodbus()){
 
 
  //poll slaves
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
             //update LCDs
             //set alarm states for LCD??
             //update GUI
-
+        setslaveRTU();
 
        while(1){
         pollslaves();

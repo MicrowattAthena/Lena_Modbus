@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <modbus/modbus-rtu.h>
 #include <modbus/modbus.h>
-
+#include <time.h>
 #define DEBUG_ENABLED
 #define TIMEOUTDURATION 2.0
 
@@ -51,7 +51,6 @@ if (success == 0) {
 
 int settimeouts(void){
 
-    //Causes Memory Access Violation?? Not sure on cause yet
   modbus_set_byte_timeout(ctx,TIMEOUTDURATION,0);
   modbus_set_response_timeout(ctx,TIMEOUTDURATION,0);
 return 1;
@@ -104,6 +103,7 @@ int readcoils(int initialaddress, int numberofcoils){
 
 int setmodbusslave(int id){
     modbus_set_slave(ctx,id);
+
     return 1;
 }
 
@@ -117,6 +117,22 @@ int report_slave_ID(){
         printf("Run Status Indicator: %s\n", slaveresponse_bytes[1] ? "ON" : "OFF");
     }
     return 1;
+}
+
+int write_registers(int address, int length, uint16_t data[]){
+int retries = 0;
+
+do {
+    if (modbus_write_registers(ctx,address,length,data)==length){
+        return 1;
+        printf("successful write");
+    }else{
+    retries++;
+    printf("failed to write");
+        }
+    }while( retries != 3 );
+     printf("Reached retry limit");
+      return 0;
 }
 }
 

@@ -35,6 +35,7 @@ int managelcd();
 int senddatatoGUI();
 int writeDB(char, char, char);
 int pollslaves();
+int setslaveRTU(void);
 int compareDB(char, char, char);
 #endif // masterDB_H
 }

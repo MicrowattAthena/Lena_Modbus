@@ -5,6 +5,7 @@
 #include <LCD/lcd_registers.h>
 #include <General/general_registers.h>
 #include <EC/EC_registers.h>
+#include <time.h>
 extern "C" {
 
 //Sets up and Connects Modbus
@@ -12,7 +13,7 @@ int initialisemodbus(void){
     initialiseRTU();
     setRTUmode();
     settimeouts();
-    if (RTU_connect()==1){
+    if (RTU_connect()){
 
         return 1;
     }else{
@@ -92,10 +93,21 @@ int readECslave(int IDnumber, char slavename){
     return 1;
 }
 
-int writeLCDtime(int IDNumber){
+int writeLCDRTU(int IDNumber){
+
+    uint16_t rtcbuffer[7];
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    rtcbuffer[0] = tm.tm_sec;
+    rtcbuffer[1] = tm.tm_min;
+    rtcbuffer[2] = tm.tm_hour;
+    rtcbuffer[3] = tm.tm_mday;
+    rtcbuffer[4] = tm.tm_mon + 1;
+    rtcbuffer[5] = tm.tm_year + 1900;
+    rtcbuffer[6] = 1;
     setmodbusslave(IDNumber);
-    //Construct RTC write buffers
-    //Write to LCDS
+    write_registers(RTC_BASE -1,7, rtcbuffer);
     return 1;
 }
 

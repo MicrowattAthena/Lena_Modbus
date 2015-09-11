@@ -16,6 +16,7 @@ int readaddresses(int, int);
 int setmodbusslave(int);
 int readcoils(int, int);
 int testfunction(void);
+int write_registers(int,int, uint16_t[]);
 
 #endif // MODBUSPROTOCOLS_H
 }

@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     modbusmanagement.cpp \
     modbusprotocols.cpp \
     masterdb.cpp \
-    dialog.cpp
+    dialog.cpp \
+    workerthread.cpp
 
 
 HEADERS  += widget.h \
@@ -31,7 +32,8 @@ HEADERS  += widget.h \
     LCD/lcd_registers.h \
     General/general_registers.h \
     EC/EC_registers.h \
-    dialog.h
+    dialog.h \
+    workerthread.h
 
 
 FORMS    += widget.ui \

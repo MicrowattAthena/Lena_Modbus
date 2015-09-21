@@ -120,7 +120,7 @@ int report_slave_ID(){
 }
 
 int write_registers(int address, int length, uint16_t data[]){
-int retries = 0;
+int retries = 2;
 
 do {
     if (modbus_write_registers(ctx,address,length,data)==length){
@@ -130,7 +130,7 @@ do {
     retries++;
     printf("failed to write");
         }
-    }while( retries != 3 );
+    }while( retries !=  1);
      printf("Reached retry limit");
       return 0;
 }

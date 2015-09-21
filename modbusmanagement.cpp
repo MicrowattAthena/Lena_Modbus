@@ -98,7 +98,7 @@ int writeLCDRTU(int IDNumber){
     uint16_t rtcbuffer[7];
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-
+    setmodbusslave(IDNumber);
     rtcbuffer[0] = tm.tm_sec;
     rtcbuffer[1] = tm.tm_min;
     rtcbuffer[2] = tm.tm_hour;
@@ -106,7 +106,7 @@ int writeLCDRTU(int IDNumber){
     rtcbuffer[4] = tm.tm_mon + 1;
     rtcbuffer[5] = tm.tm_year + 1900;
     rtcbuffer[6] = 1;
-    setmodbusslave(IDNumber);
+
     write_registers(RTC_BASE -1,7, rtcbuffer);
     return 1;
 }

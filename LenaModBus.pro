@@ -9,6 +9,9 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Lena_ModBus
+target.files = Lena_ModBus
+target.path = /home/root
+INSTALLS = target
 TEMPLATE = app
 
 
@@ -16,7 +19,8 @@ SOURCES += main.cpp\
         widget.cpp \
     modbusmanagement.cpp \
     modbusprotocols.cpp \
-    masterdb.cpp
+    masterdb.cpp \
+    dialog.cpp
 
 
 HEADERS  += widget.h \
@@ -26,10 +30,12 @@ HEADERS  += widget.h \
     masterdb.h \
     LCD/lcd_registers.h \
     General/general_registers.h \
-    EC/EC_registers.h
+    EC/EC_registers.h \
+    dialog.h
 
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    dialog.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -lmodbus
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -lmodbus
@@ -37,3 +43,6 @@ else:unix: LIBS += -L$$PWD/../../../usr/local/lib/ -lmodbus
 
 INCLUDEPATH += $$PWD/../../../usr/local/include
 DEPENDPATH += $$PWD/../../../usr/local/include
+
+RESOURCES += \
+    interface.qrc

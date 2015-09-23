@@ -67,28 +67,28 @@
      <number>10</number>
     </property>
     <item>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="btn_ECSaloon">
       <property name="text">
        <string>EC - Saloon</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btn_ECBedroom">
       <property name="text">
        <string>EC - Bedroom</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btn_LCD">
       <property name="text">
        <string>LCD Management</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btn_Engine">
       <property name="text">
        <string>Engine Management</string>
       </property>

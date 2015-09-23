@@ -15,6 +15,9 @@ public:
     explicit ec_bedroom(QWidget *parent = 0);
     ~ec_bedroom();
 
+private slots:
+    void on_pushButton_released();
+
 private:
     Ui::ec_bedroom *ui;
 };

@@ -15,6 +15,9 @@ public:
     explicit EC_Saloon(QWidget *parent = 0);
     ~EC_Saloon();
 
+private slots:
+    void on_pushButton_released();
+
 private:
     Ui::EC_Saloon *ui;
 };

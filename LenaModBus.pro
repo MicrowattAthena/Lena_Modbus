@@ -20,10 +20,11 @@ SOURCES += main.cpp\
     modbusmanagement.cpp \
     modbusprotocols.cpp \
     masterdb.cpp \
-    dialog.cpp \
     workerthread.cpp \
     ec_saloon.cpp \
-    ec_bedroom.cpp
+    ec_bedroom.cpp \
+    lcd_display.cpp \
+    engine_display.cpp
 
 
 HEADERS  += widget.h \
@@ -34,16 +35,18 @@ HEADERS  += widget.h \
     LCD/lcd_registers.h \
     General/general_registers.h \
     EC/EC_registers.h \
-    dialog.h \
     workerthread.h \
     ec_saloon.h \
-    ec_bedroom.h
+    ec_bedroom.h \
+    lcd_display.h \
+    engine_display.h
 
 
 FORMS    += widget.ui \
-    dialog.ui \
     ec_saloon.ui \
-    ec_bedroom.ui
+    ec_bedroom.ui \
+    lcd_display.ui \
+    engine_display.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -lmodbus
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -lmodbus

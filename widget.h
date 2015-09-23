@@ -16,7 +16,12 @@ public:
     ~Widget();
 
 private slots:
-    void on_pushButton_clicked();
+
+    void on_btn_ECBedroom_released();
+
+    void on_btn_ECSaloon_released();
+
+    void on_btn_LCD_released();
 
 private:
     Ui::Widget *ui;

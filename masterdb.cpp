@@ -222,7 +222,7 @@ int buildlcdDB() {
 
 int senddatatoGUI(char slavetype, char slavename, char addresstype, int address) {
     // The GUI will display some information from the DB.
-    return 1;
+    return MasterDB.EC_Saloon_Registers[REG_HUMIDITY - 1];
 }
 
 

@@ -27,5 +27,21 @@ void EC_Saloon::on_pushButton_released()
 
 void EC_Saloon::update_ecs_values()
 {
+    EC_Saloon::getECvalues();
   //  ui->lcd_roomtemp->display
+}
+
+
+void EC_Saloon::getECvalues() {
+    int buffer;
+    buffer = senddatatoGUI(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,(REG_HUMIDITY - 1));
+    ui->lcd_humidity->display(buffer);
+}
+
+void EC_Saloon::on_pushButton_2_released()
+{
+    int buffer;
+    buffer = senddatatoGUI(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,(REG_HUMIDITY - 1));
+    ui->lcd_humidity->display(buffer);
+
 }

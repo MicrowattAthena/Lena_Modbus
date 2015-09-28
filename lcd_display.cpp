@@ -20,3 +20,4 @@ void lcd_display::on_pushButton_released()
     mainwindow->show();
     this->close();
 }
+

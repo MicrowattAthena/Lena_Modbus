@@ -32,7 +32,7 @@ extern "C" {
 int initialiseDB();
 int resetflags();
 int managelcd();
-int senddatatoGUI();
+int senddatatoGUI(char,char,char, int);
 int writeDB(char, char, char);
 int pollslaves();
 int setslaveRTU(void);

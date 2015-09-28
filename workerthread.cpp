@@ -28,7 +28,6 @@ void workerthread::run()
         while(1){
          pollslaves();
          managelcd();
-         senddatatoGUI();
 
          }
      }

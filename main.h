@@ -2,5 +2,4 @@
 #define MAIN_H
 
 int main(int, char);
-
 #endif //MAIN_H

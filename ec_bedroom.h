@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushButton_released();
 
+    void on_spinBox_valueChanged(int arg1);
+
 private:
     Ui::ec_bedroom *ui;
 };

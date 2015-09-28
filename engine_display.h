@@ -15,6 +15,9 @@ public:
     explicit engine_display(QWidget *parent = 0);
     ~engine_display();
 
+private slots:
+    void on_pushButton_released();
+
 private:
     Ui::engine_display *ui;
 };

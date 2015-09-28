@@ -9,6 +9,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    setGeometry(0,0,800,480);
 }
 
 Widget::~Widget()
@@ -23,7 +24,6 @@ void Widget::on_btn_ECBedroom_released()
     ec_bedroom *testwindow = new ec_bedroom();
     testwindow->show();
     this->close();
-// AAAA
 }
 
 void Widget::on_btn_ECSaloon_released()
@@ -36,6 +36,13 @@ void Widget::on_btn_ECSaloon_released()
 void Widget::on_btn_LCD_released()
 {
     lcd_display *testwindow = new lcd_display();
+    testwindow->show();
+    this->close();
+}
+
+void Widget::on_btn_Engine_released()
+{
+    engine_display *testwindow = new engine_display();
     testwindow->show();
     this->close();
 }

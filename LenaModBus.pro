@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Lena_ModBus
 target.files = Lena_ModBus
-target.path = /home/root
+target.path = /home/debian/programs
 INSTALLS = target
 TEMPLATE = app
 
@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     ec_saloon.cpp \
     ec_bedroom.cpp \
     lcd_display.cpp \
-    engine_display.cpp
+    engine_display.cpp \
+    guihandler.cpp
 
 
 HEADERS  += widget.h \
@@ -39,7 +40,9 @@ HEADERS  += widget.h \
     ec_saloon.h \
     ec_bedroom.h \
     lcd_display.h \
-    engine_display.h
+    engine_display.h \
+    guihandler.h
+
 
 
 FORMS    += widget.ui \

@@ -1,5 +1,6 @@
 #include "engine_display.h"
 #include "ui_engine_display.h"
+#include "widget.h"
 
 engine_display::engine_display(QWidget *parent) :
     QDialog(parent),
@@ -11,4 +12,11 @@ engine_display::engine_display(QWidget *parent) :
 engine_display::~engine_display()
 {
     delete ui;
+}
+
+void engine_display::on_pushButton_released()
+{
+    Widget *mainwindow = new Widget();
+    mainwindow->show();
+    this->close();
 }

@@ -14,12 +14,13 @@ class EC_Saloon : public QDialog
 public:
     explicit EC_Saloon(QWidget *parent = 0);
     ~EC_Saloon();
-
+public slots:
+    void update_ecs_values();
 private slots:
     void on_pushButton_released();
-
 private:
     Ui::EC_Saloon *ui;
 };
+
 
 #endif // EC_SALOON_H

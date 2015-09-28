@@ -11,13 +11,17 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>Monitoring and Control Terminal</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="interface.qrc">
+    <normaloff>:/new/prefix1/Graphics/microwattlogo.png</normaloff>:/new/prefix1/Graphics/microwattlogo.png</iconset>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>10</y>
+     <x>720</x>
+     <y>20</y>
      <width>61</width>
      <height>61</height>
     </rect>

@@ -103,12 +103,13 @@ int setslaveRTU(void){
          //Set RTC for each LCD Slave
          writeLCDRTU(LCDSlaveIDs[i]);
 
-     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
+     for (int i = 0; GeneralSlaveIDs[i] !=0;i++){
+     }
         // readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
 
-     for (int i = 0; ECSlaveIDs[i] != 0; i++)
+     for (int i = 0; ECSlaveIDs[i] != 0; i++){
       //   readECslave(ECSlaveIDs[i],ECSlaveName[i]);
-
+    }
      return 1;
 }
 
@@ -219,12 +220,12 @@ int buildlcdDB() {
     return 1;
 }
 
-int senddatatoGUI() {
-    // The GUI will display some information from the DB. This information needs to be sent periodically.
-    //This could occur whenever a full poll occurs, or could be run on a seperate thread on a fixed time schedule (?)
-    //Ask Ian
+int senddatatoGUI(char slavetype, char slavename, char addresstype, int address) {
+    // The GUI will display some information from the DB.
     return 1;
 }
+
+
 
 int writeDB(char slavetype, char slavename, char addresstype){
 

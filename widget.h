@@ -23,6 +23,8 @@ private slots:
 
     void on_btn_LCD_released();
 
+    void on_btn_Engine_released();
+
 private:
     Ui::Widget *ui;
 };

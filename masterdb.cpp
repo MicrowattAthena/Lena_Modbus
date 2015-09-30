@@ -103,13 +103,9 @@ int setslaveRTU(void){
          //Set RTC for each LCD Slave
          writeLCDRTU(LCDSlaveIDs[i]);
 
-     for (int i = 0; GeneralSlaveIDs[i] !=0;i++){
-     }
-        // readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
+     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
+         writegeneralRTU(GeneralSlaveIDs[i]);
 
-     for (int i = 0; ECSlaveIDs[i] != 0; i++){
-      //   readECslave(ECSlaveIDs[i],ECSlaveName[i]);
-    }
      return 1;
 }
 
@@ -222,9 +218,81 @@ int buildlcdDB() {
 
 int senddatatoGUI(char slavetype, char slavename, char addresstype, int address) {
     // The GUI will display some information from the DB.
-    return MasterDB.EC_Saloon_Registers[REG_HUMIDITY - 1];
-}
+    
+    switch (slavetype) {
+    case ENVIRONMENTAL_CONTROL:
+        
+        switch (slavename) {
+        case BEDROOM:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.EC_Bedroom_Registers[address -1];
+            case COILS:
+                return MasterDB.EC_Bedroom_Coils[address - 1];
+            break;
+            }
 
+         case SALOON:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.EC_Saloon_Registers[address - 1];
+            case COILS:
+                return MasterDB.EC_Saloon_Coils[address - 1];
+            break;
+            }
+        }
+        
+    case GENERAL_BOARD:
+        
+        switch (slavename){
+        case GENERAL_ENGINE:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.General_Engine_Registers[address - 1];
+            case COILS:
+                return MasterDB.General_Engine_Coils[address - 1];
+            break;
+        }
+
+
+    break;
+    }
+
+
+       
+        
+    case LCD_CONTROL:
+            
+            switch (addresstype) {
+            case ENGINE:
+                return MasterDB.LCD_Saloon_Engine[address - 1];
+            case DCSYS:
+                return MasterDB.LCD_Saloon_DCsys[address - 1];
+            case ACSYS:
+                return MasterDB.LCD_Saloon_ACsys[address - 1];
+            case HVAC:
+                return MasterDB.LCD_Saloon_HVAC[address - 1];
+            case TANKS:
+                return MasterDB.LCD_Saloon_Tanks[address -1];
+            case RR:
+                return MasterDB.LCD_Saloon_RR[address - 1];
+            case GPS:
+                return MasterDB.LCD_Saloon_GPS[address - 1];
+            case SONAR:
+                return MasterDB.LCD_Saloon_Sonar[address - 1];
+            case LIGHTS:
+                return MasterDB.LCD_Saloon_Lights[address - 1];
+            case LCD:
+                return MasterDB.LCD_Saloon_LCD[address - 1];
+            case GYRO:
+                return MasterDB.LCD_Saloon_Gyro[address - 1];
+            break;
+            }
+
+  
+}
+return 0;
+}
 
 
 int writeDB(char slavetype, char slavename, char addresstype){
@@ -281,14 +349,10 @@ int writeDB(char slavetype, char slavename, char addresstype){
                         MasterDB.EC_Saloon_Coils_Flag[i] = 1;
                     }
             break;
-            default:
-                //SHOULDNT HAPPEN
-                break;
+
             }
             break;
-        default:
-            //SHOULDNT HAPPEN
-            break;
+
         }
         break;
 

@@ -8,7 +8,6 @@ ec_bedroom::ec_bedroom(QWidget *parent) :
     ui(new Ui::ec_bedroom)
 {
     ui->setupUi(this);
-    ui->lcdNumber->display(testvalue);
     ui->horizontalSlider->setValue(testvalue);
 }
 

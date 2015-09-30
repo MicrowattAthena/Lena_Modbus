@@ -111,4 +111,19 @@ int writeLCDRTU(int IDNumber){
     return 1;
 }
 
+int writegeneralRTU(int IDNumber){
+    uint16_t rtcbuffer[7];
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    setmodbusslave(IDNumber);
+    rtcbuffer[0] = tm.tm_sec;
+    rtcbuffer[1] = tm.tm_min;
+    rtcbuffer[2] = tm.tm_hour;
+    rtcbuffer[3] = tm.tm_mday;
+    rtcbuffer[4] = tm.tm_mon + 1;
+    rtcbuffer[5] = tm.tm_year + 1900;
+    rtcbuffer[6] = 1;
+
+ //   write_registers(REG_RTC_GEN_SECS -1,7, rtcbuffer);
+}
 }

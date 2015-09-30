@@ -21,9 +21,6 @@ private slots:
 
 private:
     Ui::EC_Saloon *ui;
-
-  void getECvalues();
-
 };
 
 

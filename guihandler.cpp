@@ -2,6 +2,10 @@
 #include "ec_saloon.h"
 #include <QObject>
 #include <QTimer>
+#include <QDebug>
+
+extern guihandler *handler;
+
 guihandler::guihandler()
 {
 
@@ -12,18 +16,16 @@ void guihandler::initialise(){
     timer->setInterval(5000);
     QObject::connect(
                 timer, SIGNAL(timeout()),
-                this, SLOT(updateGUI()));
+                handler, SLOT(updateGUI()));
     timer->start();
 
     // Create connection from signals to slots
-    EC_Saloon *ecshandler = new EC_Saloon();
-    QObject::connect(
-                this, SIGNAL(requestupdate()),
-                ecshandler,SLOT(update_ecs_values()));
+    //EC_Saloon *ecshandler = new EC_Saloon();
+// QObject::connect(this, &guihandler::requestupdate, ecshandler,&EC_Saloon ::update_ecs_values);
 
 }
 void guihandler::updateGUI(){
-
+       qWarning() << "Signal Timeout";
    //Connect this signal to slots for updating on each screen
     emit this->requestupdate();
 }

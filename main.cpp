@@ -5,6 +5,7 @@
 #include <QtCore/QCoreApplication>
 #include "guihandler.h"
 
+guihandler *handler = new guihandler;
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +14,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 
-    guihandler *handler = new guihandler();
+
     handler->initialise();
 
 

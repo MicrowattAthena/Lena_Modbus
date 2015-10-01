@@ -136,7 +136,7 @@ Temperature</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_16">
+    <widget class="QLabel" name="enc_b_temp_lbl">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -157,7 +157,7 @@ Temperature</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_9">
+    <widget class="QLabel" name="enc_b_tempthresh_lbl">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -178,7 +178,7 @@ Temperature</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_2">
+    <widget class="QSlider" name="enc_b_tempthresh_slider">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -222,9 +222,9 @@ Threshold</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <zorder>label_16</zorder>
-    <zorder>label_9</zorder>
-    <zorder>horizontalSlider_2</zorder>
+    <zorder>enc_b_temp_lbl</zorder>
+    <zorder>enc_b_tempthresh_lbl</zorder>
+    <zorder>enc_b_tempthresh_slider</zorder>
     <zorder>label_8</zorder>
     <zorder>label_3</zorder>
    </widget>
@@ -264,7 +264,7 @@ Threshold</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_17">
+    <widget class="QLabel" name="enc_b_co2_lbl">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -279,13 +279,13 @@ Threshold</string>
       </font>
      </property>
      <property name="text">
-      <string>20%</string>
+      <string>20 ppm</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_7">
+    <widget class="QSlider" name="enc_b_co2thresh_slider">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -295,10 +295,10 @@ Threshold</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>150</number>
+      <number>400</number>
      </property>
      <property name="maximum">
-      <number>250</number>
+      <number>3000</number>
      </property>
      <property name="singleStep">
       <number>10</number>
@@ -307,7 +307,7 @@ Threshold</string>
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="label_18">
+    <widget class="QLabel" name="enc_b_co2thresh_lbl">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -322,7 +322,7 @@ Threshold</string>
       </font>
      </property>
      <property name="text">
-      <string>70%</string>
+      <string>1000</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -386,7 +386,7 @@ Threshold</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_19">
+    <widget class="QLabel" name="enc_b_humidity_lbl">
      <property name="geometry">
       <rect>
        <x>160</x>
@@ -470,7 +470,7 @@ Threshold</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_8">
+    <widget class="QSlider" name="enc_b_humidityH_slider">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -480,19 +480,19 @@ Threshold</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>150</number>
+      <number>0</number>
      </property>
      <property name="maximum">
-      <number>250</number>
+      <number>100</number>
      </property>
      <property name="singleStep">
-      <number>10</number>
+      <number>1</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_9">
+    <widget class="QSlider" name="enc_b_humidityL_slider">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -502,19 +502,19 @@ Threshold</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>150</number>
+      <number>0</number>
      </property>
      <property name="maximum">
-      <number>250</number>
+      <number>100</number>
      </property>
      <property name="singleStep">
-      <number>10</number>
+      <number>1</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="label_20">
+    <widget class="QLabel" name="enc_b_humidityH_lbl">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -535,7 +535,7 @@ Threshold</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="label_21">
+    <widget class="QLabel" name="enc_b_humidityL_lbl">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -558,13 +558,13 @@ Threshold</string>
     </widget>
     <zorder>label_10</zorder>
     <zorder>label_7</zorder>
-    <zorder>label_19</zorder>
+    <zorder>enc_b_humidity_lbl</zorder>
     <zorder>label_11</zorder>
     <zorder>label_12</zorder>
-    <zorder>horizontalSlider_8</zorder>
-    <zorder>horizontalSlider_9</zorder>
-    <zorder>label_20</zorder>
-    <zorder>label_21</zorder>
+    <zorder>enc_b_humidityH_slider</zorder>
+    <zorder>enc_b_humidityL_slider</zorder>
+    <zorder>enc_b_humidityH_lbl</zorder>
+    <zorder>enc_b_humidityL_lbl</zorder>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
@@ -581,7 +581,7 @@ Threshold</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QSlider" name="horizontalSlider">
+    <widget class="QSlider" name="enc_b_brightness_slider">
      <property name="geometry">
       <rect>
        <x>180</x>
@@ -590,11 +590,14 @@ Threshold</string>
        <height>20</height>
       </rect>
      </property>
+     <property name="maximum">
+      <number>8</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QSlider" name="horizontalSlider_3">
+    <widget class="QSlider" name="enc_b_led_slider">
      <property name="geometry">
       <rect>
        <x>380</x>
@@ -602,6 +605,12 @@ Threshold</string>
        <width>171</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

@@ -1,5 +1,6 @@
 #include "guihandler.h"
 #include "ec_saloon.h"
+#include "EC/EC_registers.h"
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
@@ -12,6 +13,7 @@ guihandler::guihandler()
 }
 
 void guihandler::initialise(){
+
     QTimer *timer = new QTimer();
     timer->setInterval(5000);
     QObject::connect(
@@ -25,7 +27,9 @@ void guihandler::initialise(){
 
 }
 void guihandler::updateGUI(){
-       qWarning() << "Signal Timeout";
+       qWarning() << "Updating GUI";
    //Connect this signal to slots for updating on each screen
     emit this->requestupdate();
 }
+
+

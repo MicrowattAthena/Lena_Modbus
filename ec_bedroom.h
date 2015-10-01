@@ -14,7 +14,8 @@ class ec_bedroom : public QDialog
 public:
     explicit ec_bedroom(QWidget *parent = 0);
     ~ec_bedroom();
-
+public slots:
+    void update_ecb_values();
 private slots:
     void on_pushButton_released();
 

@@ -1,5 +1,5 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-int main(int, char);
+int main(int, char **);
 #endif //MAIN_H

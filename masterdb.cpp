@@ -11,8 +11,11 @@ extern "C" {
     const int LCDSlaveIDs[] = { 1,2, 0 };
     const char LCDSlaveName[] = { SALOON, BEDROOM, '0' };
 
-    const int GeneralSlaveIDs[] = { 5, 0 };
-    const char GeneralSlaveName[] = {GENERAL_ENGINE, '0'};
+  //  const int GeneralSlaveIDs[] = { 5, 0 };
+  //  const char GeneralSlaveName[] = {GENERAL_ENGINE, '0'};
+
+    const int GeneralSlaveIDs[] = {0};
+    const char GeneralSlaveName[] = {'0'};
 
     const int ECSlaveIDs[] = {3,4,0 };
    const char ECSlaveName[] = { SALOON, BEDROOM, '0'};

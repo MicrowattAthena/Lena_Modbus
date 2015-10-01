@@ -124,6 +124,6 @@ int writegeneralRTU(int IDNumber){
     rtcbuffer[5] = tm.tm_year + 1900;
     rtcbuffer[6] = 1;
 
- //   write_registers(REG_RTC_GEN_SECS -1,7, rtcbuffer);
+    write_registers(REG_RTC_GEN_SECS -1,7, rtcbuffer);
 }
 }

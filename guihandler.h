@@ -2,7 +2,6 @@
 #define GUIHANDLER_H
 
 #include <QObject>
-
 class guihandler : public QObject
 {
     Q_OBJECT

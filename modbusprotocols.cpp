@@ -3,6 +3,7 @@
 #include <modbus/modbus-rtu.h>
 #include <modbus/modbus.h>
 #include <time.h>
+#include <QDebug>
 #define DEBUG_ENABLED
 #define TIMEOUTDURATION 2.0
 
@@ -18,13 +19,14 @@ int initialiseRTU(void){
 ctx = modbus_new_rtu("/dev/ttyUSB0", 19200, 'E',8,1);
 if (ctx == NULL) {
 #ifdef DEBUG_ENABLED
-    printf("Could not initialise modbus\n");
+    qWarning() << "Modbus failed to initialise";
 #endif
     return 0;
 }
 else {
 #ifdef DEBUG_ENABLED
-    printf("Modbus initialised\n");
+    qWarning() << "Modbus Initialised";
+
 #endif
     return 1;
     }
@@ -37,7 +39,7 @@ int success;
 success = modbus_rtu_set_serial_mode(ctx, MODBUS_RTU_RS485);
 if (success == 0) {
 #ifdef DEBUG_ENABLED
-    printf("RTU Set Successfully\n");
+  qWarning() << "RTU set succesfully";
 #endif
     return 1;
 }else {
@@ -120,18 +122,18 @@ int report_slave_ID(){
 }
 
 int write_registers(int address, int length, uint16_t data[]){
-int retries = 2;
+int retries = 3;
 
 do {
     if (modbus_write_registers(ctx,address,length,data)==length){
         return 1;
-        printf("successful write");
+       qWarning() << "Successful Write";
     }else{
-    retries++;
-    printf("failed to write");
+    retries--;
+    qWarning() << "Failed to Write, re-attempting";
         }
-    }while( retries !=  1);
-     printf("Reached retry limit");
+    }while( retries !=  0);
+     qWarning() << "Failed to Write, reached retry limit!";
       return 0;
 }
 }

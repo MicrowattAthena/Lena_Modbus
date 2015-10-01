@@ -11,15 +11,16 @@ workerthread::workerthread()
 void workerthread::run()
 {
 
-     qDebug() << "Running";
+     qWarning() << "Initialised Worker Thread";
      //Initialise Modbus
 
     if (initialisemodbus()){
 
-
+    qWarning() << "WT:Setting RTUs";
          setslaveRTU();
 
         while(1){
+            qWarning() << "WT:Polling Slaves";
          pollslaves();
          managelcd();
 

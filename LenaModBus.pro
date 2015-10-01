@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Lena_ModBus
 target.files = Lena_ModBus
-target.path = /home/debian/programs
+target.path = /home/debian/programs/lenamodbus
 INSTALLS = target
 TEMPLATE = app
 
@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     ec_bedroom.cpp \
     lcd_display.cpp \
     engine_display.cpp \
-    guihandler.cpp
+    guihandler.cpp \
+    calibration.cpp \
+    scribblewidget.cpp
 
 
 HEADERS  += widget.h \
@@ -41,7 +43,9 @@ HEADERS  += widget.h \
     ec_bedroom.h \
     lcd_display.h \
     engine_display.h \
-    guihandler.h
+    guihandler.h \
+    calibration.h \
+    scribblewidget.h
 
 
 
@@ -53,7 +57,7 @@ FORMS    += widget.ui \
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/release/ -lmodbus
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../usr/local/lib/debug/ -lmodbus
-else:unix: LIBS += -L$$PWD/../../../usr/local/lib/ -lmodbus
+else:unix: LIBS += -L$$PWD/../../../usr/local/lib/BB/armlib -lmodbus
 
 INCLUDEPATH += $$PWD/../../../usr/local/include
 DEPENDPATH += $$PWD/../../../usr/local/include

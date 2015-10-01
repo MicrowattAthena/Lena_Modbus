@@ -62,7 +62,7 @@
     <rect>
      <x>0</x>
      <y>180</y>
-     <width>491</width>
+     <width>506</width>
      <height>80</height>
     </rect>
    </property>
@@ -111,6 +111,19 @@
    </property>
    <property name="readOnly">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>80</y>
+     <width>391</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
    </property>
   </widget>
  </widget>

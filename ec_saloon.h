@@ -19,6 +19,8 @@ private slots:
     void on_pushButton_released();
     void on_pushButton_2_released();
 
+    void on_horizontalSlider_2_sliderReleased();
+
 private:
     Ui::EC_Saloon *ui;
 };

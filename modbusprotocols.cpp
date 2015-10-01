@@ -126,13 +126,14 @@ int retries = 3;
 
 do {
     if (modbus_write_registers(ctx,address,length,data)==length){
+        qWarning() << "Successful Write";
         return 1;
-       qWarning() << "Successful Write";
     }else{
-    retries--;
-    qWarning() << "Failed to Write, re-attempting";
-        }
-    }while( retries !=  0);
+        retries--;
+        qWarning() << "Failed to Write, re-attempting";
+    }
+}
+while( retries <=  0);
      qWarning() << "Failed to Write, reached retry limit!";
       return 0;
 }

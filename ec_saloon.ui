@@ -480,16 +480,6 @@ Threshold</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcd_humidity">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>170</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
@@ -501,6 +491,16 @@ Threshold</string>
     </property>
     <property name="text">
      <string>co2 value</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcd_humidity">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>170</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
    <zorder>label_11</zorder>
@@ -522,9 +522,9 @@ Threshold</string>
    <zorder>progressBar_3</zorder>
    <zorder>lcd_co2</zorder>
    <zorder>label_10</zorder>
-   <zorder>lcd_humidity</zorder>
    <zorder>label_7</zorder>
    <zorder>label_9</zorder>
+   <zorder>lcd_humidity</zorder>
   </widget>
   <zorder>groupBox</zorder>
   <zorder>label</zorder>

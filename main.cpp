@@ -1,3 +1,4 @@
+
 #include "widget.h"
 #include "workerthread.h"
 #include <QApplication>

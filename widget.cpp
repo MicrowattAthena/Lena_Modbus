@@ -46,3 +46,10 @@ void Widget::on_btn_Engine_released()
     testwindow->show();
     this->close();
 }
+
+void Widget::on_pushButton_released()
+{
+    EC_Saloon *testwindow = new EC_Saloon();
+    testwindow->show();
+    this->close();
+}

@@ -25,6 +25,8 @@ private slots:
 
     void on_btn_Engine_released();
 
+    void on_pushButton_released();
+
 private:
     Ui::Widget *ui;
 };

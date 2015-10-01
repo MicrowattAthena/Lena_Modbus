@@ -43,3 +43,12 @@ void EC_Saloon::update_ecs_values()
 
 
 
+
+void EC_Saloon::on_horizontalSlider_2_sliderReleased()
+{
+    int buffer;
+    buffer = ui->horizontalSlider_2->value();
+
+
+
+}

@@ -4,6 +4,7 @@
 #include "EC/EC_registers.h"
 #include "LCD/lcd_registers.h"
 #include "General/general_registers.h"
+#include <QDebug>
 extern "C" {
 
 //0 is the terminating character - illegal modbus data address.
@@ -157,14 +158,14 @@ int pollslaves() {
     resetflags();
 
     // check slave ids and types of slave
-
+  qWarning() << "Reading LCDs";
    for (int i = 0; LCDSlaveIDs[i] != 0;i++)
         //pass ID to modbusmanagement
         readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
-
+  qWarning() << "Reading Generals";
     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
         readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
-
+  qWarning() << "Reading ECs";
     for (int i = 0; ECSlaveIDs[i] != 0; i++)
         readECslave(ECSlaveIDs[i],ECSlaveName[i]);
 

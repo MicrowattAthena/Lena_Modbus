@@ -83,6 +83,7 @@ int readaddresses(int initialaddress,int numberofregisters){
         fprintf(stderr, "%s\n", modbus_strerror(errno));
         return 0;
         }else{
+     //     qWarning() << register_buffer[1];
        return 1;
     }
 }

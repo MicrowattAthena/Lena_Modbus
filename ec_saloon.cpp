@@ -14,7 +14,7 @@ EC_Saloon::EC_Saloon(QWidget *parent) :
 {
     ui->setupUi(this);
 
-  //QObject::connect(handler,&guihandler::requestupdate, this,&EC_Saloon ::update_ecs_values);
+  QObject::connect(handler,SIGNAL(requestupdate()),this,SLOT(update_ecs_values()));
 
 }
 
@@ -35,7 +35,10 @@ void EC_Saloon::on_pushButton_released()
 void EC_Saloon::update_ecs_values()
 {
     int buffer;
+
     buffer = senddatatoGUI(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,(REG_HUMIDITY));
+     qWarning() << buffer;
+      qWarning() << "Updating Humidity Value";
     ui->lcd_humidity->display(buffer);
 }
 

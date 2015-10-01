@@ -6,6 +6,8 @@
 #include <General/general_registers.h>
 #include <EC/EC_registers.h>
 #include <time.h>
+#include <QDebug>
+
 extern "C" {
 
 //Sets up and Connects Modbus
@@ -87,8 +89,13 @@ int readECslave(int IDnumber, char slavename){
 
     setmodbusslave(IDnumber);
    if (readaddresses(REGS_ENVC_BASE- 1,REG_ENVC_MAX - REGS_ENVC_BASE))
+
+       qWarning() << "EC Register Read Successful - Writing to DB";
+
        writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
+
    if (readcoils(COILS_ENVC_BASE- 1,COIL_ENVC_MAX - COILS_ENVC_BASE))
+           qWarning() << "EC Coil Read Successful - Writing to DB";
        writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
     return 1;
 }

@@ -9,7 +9,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setGeometry(0,0,800,480);
+    this->setWindowFlags(Qt::Window);
+    this->showFullScreen();
 }
 
 Widget::~Widget()

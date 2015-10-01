@@ -25,5 +25,9 @@ void workerthread::run()
          managelcd();
 
          }
-     }
+
+     }else{
+        qWarning() << "Modbus Initialisation Failed";
+        //Sent signal for failed modbus!
+    }
 }

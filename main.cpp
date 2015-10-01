@@ -1,4 +1,9 @@
-
+/*TO DO
+ * If modbus not found/working - retry, then throw error. Do not allow program to run
+ * Manage Flags for Thresholds etc.
+ * Manage queue for GUI inputs
+ * Manage GUI design
+ */
 #include "widget.h"
 #include "workerthread.h"
 #include <QApplication>

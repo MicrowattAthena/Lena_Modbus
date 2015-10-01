@@ -12,6 +12,8 @@ ec_bedroom::ec_bedroom(QWidget *parent) :
     ui(new Ui::ec_bedroom)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->showFullScreen();
     // QObject::connect(handler,&guihandler::requestupdate, this,&ec_bedroom ::update_ecb_values);
 }
 

@@ -7,6 +7,8 @@ lcd_display::lcd_display(QWidget *parent) :
     ui(new Ui::lcd_display)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->showFullScreen();
 }
 
 lcd_display::~lcd_display()

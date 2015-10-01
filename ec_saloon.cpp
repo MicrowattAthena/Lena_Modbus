@@ -13,7 +13,8 @@ EC_Saloon::EC_Saloon(QWidget *parent) :
     ui(new Ui::EC_Saloon)
 {
     ui->setupUi(this);
-
+    this->setWindowFlags(Qt::Window);
+    this->showFullScreen();
   QObject::connect(handler,SIGNAL(requestupdate()),this,SLOT(update_ecs_values()));
 
 }

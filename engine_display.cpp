@@ -7,6 +7,8 @@ engine_display::engine_display(QWidget *parent) :
     ui(new Ui::engine_display)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window);
+    this->showFullScreen();
 }
 
 engine_display::~engine_display()

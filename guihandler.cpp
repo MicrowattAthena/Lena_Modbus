@@ -15,7 +15,7 @@ guihandler::guihandler()
 void guihandler::initialise(){
 
     QTimer *timer = new QTimer();
-    timer->setInterval(5000);
+    timer->setInterval(10000);
     QObject::connect(
                 timer, SIGNAL(timeout()),
                 handler, SLOT(updateGUI()));

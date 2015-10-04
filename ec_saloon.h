@@ -18,6 +18,22 @@ public slots:
 private slots:
     void on_pushButton_released();
 
+    void on_control_roomtemp_valueChanged(int value);
+
+    void on_control_watertemp_valueChanged(int value);
+
+    void on_control_highhumidity_valueChanged(int value);
+
+    void on_control_lowhumidity_valueChanged(int value);
+
+    void on_control_co2limit_valueChanged(int value);
+
+    void on_control_backlightbrightness_valueChanged(int value);
+
+    void on_control_ledtolerance_valueChanged(int value);
+
+    void on_control_blight_valueChanged(int value);
+
 private:
     Ui::EC_Saloon *ui;
     float get_databasevalues(int);

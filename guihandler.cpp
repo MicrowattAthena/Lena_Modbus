@@ -20,12 +20,8 @@ void guihandler::initialise(){
                 timer, SIGNAL(timeout()),
                 handler, SLOT(updateGUI()));
     timer->start();
-
-    // Create connection from signals to slots
-    //EC_Saloon *ecshandler = new EC_Saloon();
-// QObject::connect(this, &guihandler::requestupdate, ecshandler,&EC_Saloon ::update_ecs_values);
-
 }
+
 void guihandler::updateGUI(){
        qWarning() << "Updating GUI";
    //Connect this signal to slots for updating on each screen

@@ -3,10 +3,8 @@
 //-----------------------------------------------------------------------------
 #ifndef _ENV_CONTROL_MODBUS_REGS_H_
 #define _ENV_CONTROL_MODBUS_REGS_H_
-
 #define REGS_ENVC_BASE   1
 #define COILS_ENVC_BASE  1
-
 // Holding registers
 typedef enum {
     REG_ROOM_TEMPR_THRESH = REGS_ENVC_BASE,
@@ -38,5 +36,7 @@ typedef enum {
   //  COIL_HEATING, WRITE ONLY
     COIL_ENVC_MAX
 } EnvCtrlCoils;
+
+const float ECMultipliers[] = { 10,10,1,1,1,1,1,1,1,10,1,1,1,10,10,10,10,10,1 };
 
 #endif

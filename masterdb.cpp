@@ -2,6 +2,7 @@
 #include "modbusmanagement.h"
 #include "modbusprotocols.h"
 #include "EC/EC_registers.h"
+#include "workerthread.h"
 #include "LCD/lcd_registers.h"
 #include "General/general_registers.h"
 #include <QDebug>
@@ -99,6 +100,16 @@ struct database {
    int General_Engine_Coils_Flag[COIL_GENERAL_MAX - COILS_GENERAL_BASE];
 };
 
+struct queuefile {
+    char slavetype;
+    char slavename;
+    char addresstype;
+    int address;
+    int value;
+};
+   queuefile GUIqueuefile[30];
+   int queuecounter = 0;
+
 struct database MasterDB;
 int setslaveRTU(void){
 
@@ -180,6 +191,7 @@ int managelcd() {
 
     buildlcdDB();
 
+    //Alarms also need to be monitored. Check Alarm States and set alarm if necessary
     return 1;
 }
 
@@ -220,12 +232,128 @@ int buildlcdDB() {
     return 1;
 }
 
+void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
+{
+     qWarning() << "Adding to Queue";
+    if (queuecounter < 30)
+    {
+        GUIqueuefile[queuecounter] = {slavetype,slavename,addresstype,address,value};
+        queuecounter +=1;
+    }
+
+}
+
+void deletequeuedata () {
+    queuecounter = 0;
+}
+
+void processqueue(){
+    int i;
+    for (i = queuecounter; i--; i <= 0)
+    {
+    writequeue(GUIqueuefile[i].slavetype, GUIqueuefile[i].slavename, GUIqueuefile[i].addresstype, GUIqueuefile[i].address,GUIqueuefile[i].value);
+    }
+    deletequeuedata();
+}
+
+int writequeue(char slavetype, char slavename, char addresstype, int address, int value) {
+
+    //This needs to be written to slaves
+
+    switch (slavetype) {
+    case ENVIRONMENTAL_CONTROL:
+
+
+        switch (slavename) {
+        case BEDROOM:
+            setmodbusslave(4);
+            switch (addresstype) {
+            case REGISTERS:
+                    qWarning() << "DEBUG - CORRECT MODBUS PROTOCOL!";
+                    qWarning() << value;
+                    qWarning() << address;
+                 write_single_register(address - 1,value);
+                 return 1;
+            case COILS:
+                 write_single_coil(address - 1,value);
+                 return 1;
+            break;
+            }
+
+         case SALOON:
+             setmodbusslave(3);
+            switch (addresstype) {
+            case REGISTERS:
+                write_single_register(address - 1,value);
+                return 1;
+            case COILS:
+                write_single_coil(address - 1,value);
+                return 1;
+            break;
+            }
+        }
+
+    case GENERAL_BOARD:
+
+        switch (slavename){
+        case GENERAL_ENGINE:
+            setmodbusslave(0);
+            switch (addresstype) {
+            case REGISTERS:
+                write_single_register(address - 1,value);
+                return 1;
+            case COILS:
+                write_single_coil(address - 1,value);
+                return 1;
+            break;
+        }
+
+
+    break;
+    }
+
+
+
+
+    case LCD_CONTROL:
+    setmodbusslave(1);
+            switch (addresstype) {
+            case ALARM:
+                write_single_coil(address - 1,value);
+                break;
+            case WARNING:
+                write_single_coil(address - 1, value);
+                break;
+            default:
+                write_single_register(address - 1,value);
+                break;
+            break;
+            }
+
+    setmodbusslave(2);
+     switch (addresstype) {
+    case ALARM:
+        write_single_coil(address - 1,value);
+        break;
+    case WARNING:
+        write_single_coil(address - 1, value);
+        break;
+    default:
+        write_single_register(address - 1,value);
+        break;
+    break;
+    }
+
+}
+return 0;
+}
+
 int senddatatoGUI(char slavetype, char slavename, char addresstype, int address) {
     // The GUI will display some information from the DB.
     
     switch (slavetype) {
     case ENVIRONMENTAL_CONTROL:
-        
+
         switch (slavename) {
         case BEDROOM:
             switch (addresstype) {
@@ -245,9 +373,9 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
             break;
             }
         }
-        
+
     case GENERAL_BOARD:
-        
+
         switch (slavename){
         case GENERAL_ENGINE:
             switch (addresstype) {
@@ -263,10 +391,10 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
     }
 
 
-       
-        
+
+
     case LCD_CONTROL:
-            
+
             switch (addresstype) {
             case ENGINE:
                 return MasterDB.LCD_Saloon_Engine[address - 1];
@@ -293,7 +421,7 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
             break;
             }
 
-  
+
 }
 return 0;
 }

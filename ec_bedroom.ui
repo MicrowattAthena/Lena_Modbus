@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>480</height>
+    <width>480</width>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,741 @@
     <normaloff>:/new/prefix1/Graphics/microwattlogo.png</normaloff>:/new/prefix1/Graphics/microwattlogo.png</iconset>
   </property>
   <widget class="QLabel" name="logo">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>10</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="interface.qrc">:/new/prefix1/Graphics/microwattlogo.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>461</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Measurements</string>
+    </attribute>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Humidity
+Level</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Room
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>100</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CO&lt;span style=&quot; vertical-align:super;&quot;&gt;2 &lt;/span&gt;Level&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_roomtemp">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>60</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>70</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>°C</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_co2">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>110</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>120</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ppm</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_watertemp">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>10</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>0</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Water
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>20</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>°C</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_humidity">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>10</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>20</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_airouttemp">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>60</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_15">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>50</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Air Out
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>70</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>°C</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="display_airintemp">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>110</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>100</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Air In
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>120</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>°C</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Thresholds</string>
+    </attribute>
+    <widget class="QSlider" name="control_roomtemp">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>10</y>
+       <width>21</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>15</number>
+     </property>
+     <property name="maximum">
+      <number>25</number>
+     </property>
+     <property name="value">
+      <number>18</number>
+     </property>
+     <property name="tracking">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>110</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Room
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>110</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Low
+Humidity</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_watertemp">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>10</y>
+       <width>21</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>25</number>
+     </property>
+     <property name="maximum">
+      <number>60</number>
+     </property>
+     <property name="value">
+      <number>25</number>
+     </property>
+     <property name="tracking">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>110</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>High
+Humidity</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_highhumidity">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>10</y>
+       <width>21</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="value">
+      <number>18</number>
+     </property>
+     <property name="tracking">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>110</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CO&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;
+Limit</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_lowhumidity">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>10</y>
+       <width>21</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="value">
+      <number>18</number>
+     </property>
+     <property name="tracking">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_20">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>110</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Water
+Temperature</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_co2limit">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>10</y>
+       <width>21</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>400</number>
+     </property>
+     <property name="maximum">
+      <number>3000</number>
+     </property>
+     <property name="value">
+      <number>400</number>
+     </property>
+     <property name="tracking">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayroomtemp">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>40</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displaywatertemp">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayhighhumidity">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>40</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displaylowhumidity">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>40</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayco2limit">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>40</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Board Control</string>
+    </attribute>
+    <widget class="QSlider" name="control_ledtolerance">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>80</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_21">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>100</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>LED Temperature
+Tolerance (°C)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_blight">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>80</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_22">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>100</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Backlight
+Timeout (sec)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayledtolerance">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>70</y>
+       <width>61</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>N/A</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayblight">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>70</y>
+       <width>61</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>N/A</string>
+     </property>
+    </widget>
+    <widget class="QSlider" name="control_backlightbrightness">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>20</y>
+       <width>160</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>8</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displaybacklightbrightness">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>10</y>
+       <width>61</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>N/A</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_23">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>40</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Backlight
+Brightness</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>720</x>
@@ -36,26 +771,13 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QTimeEdit" name="timeEdit">
+  <widget class="QLabel" name="label_17">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>60</y>
-     <width>81</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="title">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>30</y>
-     <width>581</width>
-     <height>21</height>
+     <x>10</x>
+     <y>10</y>
+     <width>461</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -64,7 +786,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Environmental Control - Bedroom</string>
+    <string>Environmental - Bedroom</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -73,598 +795,16 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>30</y>
-     <width>101</width>
-     <height>51</height>
+     <x>20</x>
+     <y>20</y>
+     <width>61</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Back to 
-Main Screen</string>
+    <string>Back</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>761</width>
-     <height>351</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(230,230,230);</string>
-   </property>
-   <property name="title">
-    <string/>
-   </property>
-   <widget class="QFrame" name="temp_frame">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>5</y>
-      <width>741</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>131</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Room 
-Temperature</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_temp_lbl">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>20</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>10 °C</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_tempthresh_lbl">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>20</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>15°C</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QSlider" name="enc_b_tempthresh_slider">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>45</y>
-       <width>171</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>150</number>
-     </property>
-     <property name="maximum">
-      <number>250</number>
-     </property>
-     <property name="singleStep">
-      <number>10</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>570</x>
-       <y>20</y>
-       <width>151</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Temperature
-Threshold</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <zorder>enc_b_temp_lbl</zorder>
-    <zorder>enc_b_tempthresh_lbl</zorder>
-    <zorder>enc_b_tempthresh_slider</zorder>
-    <zorder>label_8</zorder>
-    <zorder>label_3</zorder>
-   </widget>
-   <widget class="QFrame" name="co2_frame">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>741</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>CO&lt;span style=&quot; vertical-align:super;&quot;&gt;2 &lt;/span&gt;Level</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_co2_lbl">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>20</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>20 ppm</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QSlider" name="enc_b_co2thresh_slider">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>45</y>
-       <width>171</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>400</number>
-     </property>
-     <property name="maximum">
-      <number>3000</number>
-     </property>
-     <property name="singleStep">
-      <number>10</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_co2thresh_lbl">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>20</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>1000</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="geometry">
-      <rect>
-       <x>580</x>
-       <y>30</y>
-       <width>141</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CO&lt;span style=&quot; vertical-align:super;&quot;&gt;2 &lt;/span&gt;Threshold&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>175</y>
-      <width>741</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>131</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Humidity</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_humidity_lbl">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>30</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>20%</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_10">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>10</y>
-       <width>181</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Humidity Threshold</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>5</y>
-       <width>181</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>High</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_12">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>75</y>
-       <width>181</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Low</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QSlider" name="enc_b_humidityH_slider">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>5</y>
-       <width>171</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="singleStep">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="enc_b_humidityL_slider">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>75</y>
-       <width>171</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="singleStep">
-      <number>1</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_humidityH_lbl">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>25</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>70%</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="enc_b_humidityL_lbl">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>55</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>10%</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <zorder>label_10</zorder>
-    <zorder>label_7</zorder>
-    <zorder>enc_b_humidity_lbl</zorder>
-    <zorder>label_11</zorder>
-    <zorder>label_12</zorder>
-    <zorder>enc_b_humidityH_slider</zorder>
-    <zorder>enc_b_humidityL_slider</zorder>
-    <zorder>enc_b_humidityH_lbl</zorder>
-    <zorder>enc_b_humidityL_lbl</zorder>
-   </widget>
-   <widget class="QFrame" name="frame_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>280</y>
-      <width>741</width>
-      <height>66</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QSlider" name="enc_b_brightness_slider">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>25</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>8</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="enc_b_led_slider">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>25</y>
-       <width>171</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="singleStep">
-      <number>10</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_13">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>10</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>LCD Brightness</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_14">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>20</y>
-       <width>181</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>LED Tolerance</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </widget>
-  </widget>
-  <zorder>groupBox</zorder>
-  <zorder>logo</zorder>
-  <zorder>timeEdit</zorder>
-  <zorder>title</zorder>
-  <zorder>pushButton</zorder>
  </widget>
  <resources>
   <include location="interface.qrc"/>

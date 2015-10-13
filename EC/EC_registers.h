@@ -37,6 +37,27 @@ typedef enum {
     COIL_ENVC_MAX
 } EnvCtrlCoils;
 
-const float ECMultipliers[] = { 10,10,1,1,1,1,1,1,1,10,1,1,1,10,10,10,10,10,1 };
+const float ECMultipliers[] = {  1
+                                ,10
+                                ,10
+                                ,1
+                                ,1
+                                ,1
+                                ,1
+                                ,1
+                                ,1
+                                ,1
+                                ,10
+                                ,1
+                                ,1
+                                ,1
+                                ,10
+                                ,10
+                                ,10
+                                ,10
+                                ,10
+                                ,10
+                                ,10
+                                , 1};
 
 #endif

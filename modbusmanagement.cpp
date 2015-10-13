@@ -12,16 +12,20 @@ extern "C" {
 
 //Sets up and Connects Modbus
 int initialisemodbus(void){
+
+    int retries = 0;
     initialiseRTU();
     setRTUmode();
     settimeouts();
-    if (RTU_connect()){
 
-        return 1;
-    }else{
-        return 0;
-    }
-
+    do {
+        if (RTU_connect()){
+            return 1;
+        }else{
+            retries++;
+        }
+    } while (retries <= 4);
+    return 0;
 }
 
 int testread(void){

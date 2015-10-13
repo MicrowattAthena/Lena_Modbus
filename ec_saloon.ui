@@ -102,7 +102,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -436,13 +436,13 @@ Humidity</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>0</number>
+      <number>25</number>
      </property>
      <property name="maximum">
-      <number>100</number>
+      <number>60</number>
      </property>
      <property name="value">
-      <number>18</number>
+      <number>60</number>
      </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -475,10 +475,10 @@ Humidity</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>15</number>
+      <number>0</number>
      </property>
      <property name="maximum">
-      <number>25</number>
+      <number>100</number>
      </property>
      <property name="value">
       <number>18</number>
@@ -514,10 +514,10 @@ Limit</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>15</number>
+      <number>0</number>
      </property>
      <property name="maximum">
-      <number>25</number>
+      <number>100</number>
      </property>
      <property name="value">
       <number>18</number>
@@ -553,13 +553,19 @@ Temperature</string>
       </rect>
      </property>
      <property name="minimum">
-      <number>15</number>
+      <number>400</number>
      </property>
      <property name="maximum">
-      <number>25</number>
+      <number>3000</number>
+     </property>
+     <property name="singleStep">
+      <number>100</number>
+     </property>
+     <property name="pageStep">
+      <number>100</number>
      </property>
      <property name="value">
-      <number>18</number>
+      <number>400</number>
      </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -678,7 +684,7 @@ Tolerance (°C)</string>
       </rect>
      </property>
      <property name="maximum">
-      <number>10</number>
+      <number>1000</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -747,7 +753,7 @@ Timeout (sec)</string>
       </rect>
      </property>
      <property name="maximum">
-      <number>10</number>
+      <number>8</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

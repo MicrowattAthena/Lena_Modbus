@@ -11,19 +11,22 @@ workerthread::workerthread()
 void workerthread::run()
 {
 
+
+
      qWarning() << "Initialised Worker Thread";
      //Initialise Modbus
 
     if (initialisemodbus()){
-
     qWarning() << "WT:Setting RTUs";
+
          setslaveRTU();
 
         while(1){
+
             qWarning() << "WT:Polling Slaves";
          pollslaves();
          managelcd();
-
+        processqueue();
          }
 
      }else{
@@ -31,3 +34,5 @@ void workerthread::run()
         //Sent signal for failed modbus!
     }
 }
+
+

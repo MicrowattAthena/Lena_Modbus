@@ -22,17 +22,18 @@ int main(int argc, char *argv[])
     // Create and Show Widget
     QApplication a(argc, argv);
 
+    qWarning() << "Initialising";
+
+    handler->initialise();
+    workerthread mThread;
+    mThread.start();
 
     Calibration cal;
     cal.exec();
 
-    qWarning() << "Initialising";
 
-    handler->initialise();
     Widget w;
     w.show();
-    workerthread mThread;
-    mThread.start();
 
 
     return   a.exec();

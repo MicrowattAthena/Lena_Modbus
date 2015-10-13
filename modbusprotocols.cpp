@@ -104,6 +104,7 @@ int readcoils(int initialaddress, int numberofcoils){
 
 }
 
+
 int setmodbusslave(int id){
     modbus_set_slave(ctx,id);
 
@@ -137,6 +138,57 @@ do {
 while( retries <=  0);
      qWarning() << "Failed to Write, reached retry limit!";
       return 0;
+}
+
+int write_coils(int address, int length, uint8_t data[]){
+    int retries = 3;
+
+    do {
+        if (modbus_write_bits(ctx,address,length,data)==length){
+            qWarning() << "Successful Write";
+            return 1;
+        }else{
+            retries--;
+            qWarning() << "Failed to Write, re-attempting";
+        }
+    }
+    while( retries <=  0);
+         qWarning() << "Failed to Write, reached retry limit!";
+          return 0;
+}
+
+int write_single_register(int address, uint16_t data){
+    int retries = 3;
+    qWarning() << "Writing Single Register";
+    do {
+        if (modbus_write_register(ctx,address,data)==1){
+            qWarning() << "Successful Write";
+            return 1;
+        }else{
+            retries--;
+            qWarning() << "Failed to Write, re-attempting";
+        }
+    }
+    while( retries <=  0);
+         qWarning() << "Failed to Write, reached retry limit!";
+          return 0;
+}
+
+int write_single_coil(int address, uint8_t data){
+    int retries = 3;
+
+    do {
+        if (modbus_write_bit(ctx,address,data)==1){
+            qWarning() << "Successful Write";
+            return 1;
+        }else{
+            retries--;
+            qWarning() << "Failed to Write, re-attempting";
+        }
+    }
+    while( retries <=  0);
+         qWarning() << "Failed to Write, reached retry limit!";
+          return 0;
 }
 }
 

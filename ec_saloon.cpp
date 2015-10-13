@@ -89,6 +89,17 @@ float EC_Saloon::get_databasevalues(int REGISTER_LOCATION)
 
 }
 
+float EC_Saloon::set_databasevalues(int REGISTER_LOCATION, int value)
+{
+
+    /* Sets the correct multiplier to display the 'stored value', then sets the value to the correct location iN DB */
+
+
+    int buffer;
+    buffer = buffer * ECMultipliers[REGISTER_LOCATION];
+
+}
+
 void EC_Saloon::on_control_roomtemp_valueChanged(int value)
 {
     ui->control_displayroomtemp->setText(QString::number(value));
@@ -127,4 +138,9 @@ void EC_Saloon::on_control_ledtolerance_valueChanged(int value)
 void EC_Saloon::on_control_blight_valueChanged(int value)
 {
     ui->control_displayblight->setText(QString::number(value));
+}
+
+void EC_Saloon::on_control_roomtemp_sliderMoved(int position)
+{
+
 }

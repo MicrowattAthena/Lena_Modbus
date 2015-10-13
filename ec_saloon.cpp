@@ -4,20 +4,19 @@
 #include "guihandler.h"
 #include "masterdb.h"
 #include "main.h"
+
 #include <QDebug>
 
-
 extern guihandler *handler;
-EC_Saloon::EC_Saloon(QWidget *parent) :
 
+EC_Saloon::EC_Saloon(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EC_Saloon)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window);
     this->showFullScreen();
-  QObject::connect(handler,SIGNAL(requestupdate()),this,SLOT(update_ecs_values()));
-
+    QObject::connect(handler,SIGNAL(requestupdate()),this,SLOT(update_ecs_values()));
 }
 
 
@@ -88,59 +87,68 @@ float EC_Saloon::get_databasevalues(int REGISTER_LOCATION)
     return buffer;
 
 }
-
-float EC_Saloon::set_databasevalues(int REGISTER_LOCATION, int value)
+void EC_Saloon::checkuserinput(char slavetype, char slavename, char addresstype, int registerlocation, int value)
 {
-
-    /* Sets the correct multiplier to display the 'stored value', then sets the value to the correct location iN DB */
-
-
     int buffer;
-    buffer = buffer * ECMultipliers[REGISTER_LOCATION];
+
+    //Measurement Tab
+    buffer = get_databasevalues(registerlocation);
+    qWarning() << buffer;
+    qWarning() << value;
+    if (buffer == value){
+       //        qWarning() << "NOT USER UPDATED!";
+    }else{
+         value = value * ECMultipliers[registerlocation];
+        getqueuedata(slavetype,slavename, addresstype, registerlocation, value);
+    }
 
 }
 
 void EC_Saloon::on_control_roomtemp_valueChanged(int value)
 {
     ui->control_displayroomtemp->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_ROOM_TEMPR_THRESH,value);
 }
 
 void EC_Saloon::on_control_watertemp_valueChanged(int value)
 {
     ui->control_displaywatertemp->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_FLOW_TEMPR_THRESH,value);
 }
 
 void EC_Saloon::on_control_highhumidity_valueChanged(int value)
 {
     ui->control_displayhighhumidity->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_HUMIHI_THRESH,value);
 }
 
 void EC_Saloon::on_control_lowhumidity_valueChanged(int value)
 {
     ui->control_displaylowhumidity->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_HUMILO_THRESH,value);
 }
 
 void EC_Saloon::on_control_co2limit_valueChanged(int value)
 {
     ui->control_displayco2limit->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_CO2ALRM_THRESH,value);
 }
 
 void EC_Saloon::on_control_backlightbrightness_valueChanged(int value)
 {
     ui->control_displaybacklightbrightness->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_LCD_BRIGHTNESS,svalue);
 }
 
 void EC_Saloon::on_control_ledtolerance_valueChanged(int value)
 {
     ui->control_displayledtolerance->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_TEMPLED_TOLER,value);
 }
 
 void EC_Saloon::on_control_blight_valueChanged(int value)
 {
     ui->control_displayblight->setText(QString::number(value));
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_BLIGHT_TIMEOUT,value);
 }
 
-void EC_Saloon::on_control_roomtemp_sliderMoved(int position)
-{
-
-}

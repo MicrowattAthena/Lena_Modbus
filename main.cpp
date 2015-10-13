@@ -23,13 +23,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     qWarning() << "Initialising";
-
-    handler->initialise();
     workerthread mThread;
     mThread.start();
 
     Calibration cal;
     cal.exec();
+
+    handler->initialise();
 
 
     Widget w;

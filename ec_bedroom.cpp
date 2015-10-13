@@ -86,19 +86,17 @@ float ec_bedroom::get_databasevalues(int REGISTER_LOCATION)
     return buffer;
 
 }
-void ec_bedroom::checkuserinput(char slavetype, char slavename, char addresstype, int registerlocation, int value){
+void ec_bedroom::checkuserinput(char slavetype, char slavename, char addresstype, int registerlocation, int value)
+{
     int buffer;
-    int buffer2;
-    qWarning() << "CHECKING IF USER UPDATED";
 
     //Measurement Tab
     buffer = get_databasevalues(registerlocation);
     qWarning() << buffer;
       qWarning() << value;
     if (buffer == value){
-               qWarning() << "NOT USER UPDATED!";
+             //  qWarning() << "NOT USER UPDATED!";
     }else{
-         qWarning() << "USER UPDATED!";
          value = value * ECMultipliers[registerlocation];
         getqueuedata(slavetype,slavename, addresstype, registerlocation, value);
     }
@@ -115,43 +113,42 @@ void ec_bedroom::on_control_roomtemp_valueChanged(int value)
 void ec_bedroom::on_control_highhumidity_valueChanged(int value)
 {
     ui->control_displayhighhumidity->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_HUMIHI_THRESH,value);
 }
 
 void ec_bedroom::on_control_lowhumidity_valueChanged(int value)
 {
     ui->control_displaylowhumidity->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_HUMILO_THRESH,value);
 }
 
 void ec_bedroom::on_control_co2limit_valueChanged(int value)
 {
     ui->control_displayco2limit->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_CO2ALRM_THRESH,value);
 }
 
 void ec_bedroom::on_control_backlightbrightness_valueChanged(int value)
 {
     ui->control_displaybacklightbrightness->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_LCD_BRIGHTNESS,value);
 }
 
 void ec_bedroom::on_control_ledtolerance_valueChanged(int value)
 {
     ui->control_displayledtolerance->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_TEMPLED_TOLER,value);
 }
 
 void ec_bedroom::on_control_blight_valueChanged(int value)
 {
     ui->control_displayblight->setText(QString::number(value));
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_ROOM_TEMPR_THRESH,value);
 }
 
 
 void ec_bedroom::on_control_watertemp_valueChanged(int value)
 {
     ui->control_displaywatertemp->setText(QString::number(value));
-}
-
-
-
-void ec_bedroom::on_control_roomtemp_sliderReleased()
-{
-
-
+      checkuserinput(ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS,REG_FLOW_TEMPR_THRESH,value);
 }

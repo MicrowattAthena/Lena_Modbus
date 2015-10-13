@@ -19,7 +19,7 @@ void workerthread::run()
     if (initialisemodbus()){
     qWarning() << "WT:Setting RTUs";
 
-         setslaveRTU();
+    setslaveRTU();
 
         while(1){
 

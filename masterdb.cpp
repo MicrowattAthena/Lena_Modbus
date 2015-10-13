@@ -234,7 +234,7 @@ int buildlcdDB() {
 
 void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
 {
-     qWarning() << "Adding to Queue";
+     qWarning() << "Adding Value to Queue";
     if (queuecounter < 30)
     {
         GUIqueuefile[queuecounter] = {slavetype,slavename,addresstype,address,value};
@@ -269,9 +269,6 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
             setmodbusslave(4);
             switch (addresstype) {
             case REGISTERS:
-                    qWarning() << "DEBUG - CORRECT MODBUS PROTOCOL!";
-                    qWarning() << value;
-                    qWarning() << address;
                  write_single_register(address - 1,value);
                  return 1;
             case COILS:

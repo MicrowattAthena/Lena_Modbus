@@ -34,13 +34,9 @@ private slots:
     void on_control_ledtolerance_valueChanged(int value);
 
     void on_control_blight_valueChanged(int value);
-
-    void on_control_roomtemp_sliderReleased();
-
 private:
     Ui::ec_bedroom *ui;
        float get_databasevalues(int);
-       float set_databasevalues(int, int);
        void checkuserinput(char,char,char, int, int);
 };
 

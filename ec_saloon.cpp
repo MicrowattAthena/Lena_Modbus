@@ -137,7 +137,7 @@ void EC_Saloon::on_control_co2limit_valueChanged(int value)
 void EC_Saloon::on_control_backlightbrightness_valueChanged(int value)
 {
     ui->control_displaybacklightbrightness->setText(QString::number(value));
-    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_LCD_BRIGHTNESS,svalue);
+    checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_LCD_BRIGHTNESS,value);
 }
 
 void EC_Saloon::on_control_ledtolerance_valueChanged(int value)

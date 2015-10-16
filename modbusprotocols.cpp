@@ -65,8 +65,7 @@ if (modbus_connect(ctx)==0){
     return 1;
 }else{
 #ifdef DEBUG_ENABLED
-    printf("Failed to Connect");
-    modbus_free(ctx);
+    qWarning() << "Failed to Connect";
 #endif
 return 0;
     }

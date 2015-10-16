@@ -31,6 +31,7 @@ void workerthread::run()
 
      }else{
         qWarning() << "Modbus Initialisation Failed";
+
         //Sent signal for failed modbus!
     }
 }

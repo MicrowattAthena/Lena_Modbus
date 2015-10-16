@@ -25,6 +25,7 @@ int initialisemodbus(void){
             retries++;
         }
     } while (retries <= 4);
+
     return 0;
 }
 

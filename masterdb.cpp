@@ -234,10 +234,36 @@ int buildlcdDB() {
 
 void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
 {
-     qWarning() << "Adding Value to Queue";
-    if (queuecounter < 30)
+    int newdata = 1; int i;
+    queuefile tempqueue;
+    tempqueue.slavetype = slavetype;
+    tempqueue.slavename = slavename;
+    tempqueue.addresstype = addresstype;
+    tempqueue.address = address;
+    tempqueue.value = value;
+
+
+ for (i = 0; i<= queuecounter; i++)
+ {
+
+    if ( (tempqueue.address == GUIqueuefile[i].address) && (tempqueue.slavename == GUIqueuefile[i].slavename) &&
+         (tempqueue.addresstype == GUIqueuefile[i].addresstype) && (tempqueue.slavetype == GUIqueuefile[i].slavetype))
     {
-        GUIqueuefile[queuecounter] = {slavetype,slavename,addresstype,address,value};
+        qWarning() << "Updating Value in Queue";
+     GUIqueuefile[i].value = tempqueue.value;
+     newdata = 0;
+    }
+
+ }
+
+    if (newdata == 1)
+    {
+        qWarning() << "Adding Value to Queue";
+        GUIqueuefile[queuecounter].slavetype = slavetype;
+         GUIqueuefile[queuecounter].slavename = slavename;
+          GUIqueuefile[queuecounter].addresstype = addresstype;
+           GUIqueuefile[queuecounter].address = address;
+            GUIqueuefile[queuecounter].value = value;
         queuecounter +=1;
     }
 
@@ -249,7 +275,7 @@ void deletequeuedata () {
 
 void processqueue(){
     int i;
-    for (i = queuecounter; i--; i <= 0)
+    for (i = queuecounter;i <= 0; i--)
     {
     writequeue(GUIqueuefile[i].slavetype, GUIqueuefile[i].slavename, GUIqueuefile[i].addresstype, GUIqueuefile[i].address,GUIqueuefile[i].value);
     }

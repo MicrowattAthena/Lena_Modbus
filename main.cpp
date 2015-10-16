@@ -23,11 +23,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     qWarning() << "Initialising";
+
     workerthread mThread;
     mThread.start();
-
-    Calibration cal;
-    cal.exec();
+   // Calibration cal;
+   // cal.exec();
 
     handler->initialise();
 

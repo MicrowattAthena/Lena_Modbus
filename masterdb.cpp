@@ -169,13 +169,16 @@ int pollslaves() {
     resetflags();
 
     // check slave ids and types of slave
+     processqueue();
   qWarning() << "Reading LCDs";
    for (int i = 0; LCDSlaveIDs[i] != 0;i++)
         //pass ID to modbusmanagement
         readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
+    processqueue();
   qWarning() << "Reading Generals";
     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
         readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
+     processqueue();
   qWarning() << "Reading ECs";
     for (int i = 0; ECSlaveIDs[i] != 0; i++)
         readECslave(ECSlaveIDs[i],ECSlaveName[i]);
@@ -234,7 +237,7 @@ int buildlcdDB() {
 
 void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
 {
-    int newdata = 1; int i;
+    uint newdata = 1; uint i;
     queuefile tempqueue;
     tempqueue.slavetype = slavetype;
     tempqueue.slavename = slavename;
@@ -270,11 +273,13 @@ void getqueuedata(char slavetype, char slavename, char addresstype, int address,
 }
 
 void deletequeuedata () {
+    qWarning()<< "Deleting Queue";
     queuecounter = 0;
 }
 
 void processqueue(){
-    int i;
+    qWarning()<< "Processing Queue";
+    uint i;
     for (i = queuecounter;i <= 0; i--)
     {
     writequeue(GUIqueuefile[i].slavetype, GUIqueuefile[i].slavename, GUIqueuefile[i].addresstype, GUIqueuefile[i].address,GUIqueuefile[i].value);

@@ -92,8 +92,6 @@ void ec_bedroom::checkuserinput(char slavetype, char slavename, char addresstype
 
     //Measurement Tab
     buffer = get_databasevalues(registerlocation);
-    qWarning() << buffer;
-      qWarning() << value;
     if (buffer == value){
              //  qWarning() << "NOT USER UPDATED!";
     }else{

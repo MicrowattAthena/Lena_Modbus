@@ -158,7 +158,6 @@ int write_coils(int address, int length, uint8_t data[]){
 
 int write_single_register(int address, uint16_t data){
     int retries = 3;
-    qWarning() << "Writing Single Register";
     do {
         if (modbus_write_register(ctx,address,data)==1){
             qWarning() << "Successful Write";

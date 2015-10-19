@@ -170,11 +170,7 @@ int pollslaves() {
 
     // check slave ids and types of slave
      processqueue();
-  qWarning() << "Reading LCDs";
-   for (int i = 0; LCDSlaveIDs[i] != 0;i++)
-        //pass ID to modbusmanagement
-        readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
-    processqueue();
+
   qWarning() << "Reading Generals";
     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
         readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
@@ -182,7 +178,11 @@ int pollslaves() {
   qWarning() << "Reading ECs";
     for (int i = 0; ECSlaveIDs[i] != 0; i++)
         readECslave(ECSlaveIDs[i],ECSlaveName[i]);
-
+    qWarning() << "Reading LCDs";
+     for (int i = 0; LCDSlaveIDs[i] != 0;i++)
+          //pass ID to modbusmanagement
+          readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
+      processqueue();
 
     return 1;
 }
@@ -194,42 +194,21 @@ int managelcd() {
 
     buildlcdDB();
 
-    //Alarms also need to be monitored. Check Alarm States and set alarm if necessary
+    managelcdalarms();
     return 1;
 }
 
+int managelcdalarms()
+{  //Alarms also need to be monitored. Check Alarm States and set alarm if necessary
+
+
+    return 1;
+}
 int buildlcdDB() {
 //Not so simple function: some data is shared between slaves. However, determining what data to use if the value is changed
 // in one slave isnt so simple. If a flag has been set for the masterDB, indicating that the value has changed outside of
 // the program, then that value should not be overwritten.
 // A messy solution, but should work.
-
-    // EC to LCD
-
-    if (MasterDB.LCD_Saloon_HVAC_Flag[(REG_HVAC_MAX - REG_HVAC_MSBEDSETTEMP)]){
-         MasterDB.EC_Bedroom_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)] = MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_MSBEDTEMP)];
-    }else{
-         MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_MSBEDTEMP)] = MasterDB.EC_Bedroom_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)];
-    }
-
-    if (MasterDB.LCD_Saloon_HVAC_Flag[(REG_HVAC_MAX - REG_HVAC_MSBEDHUMID)]){
-         MasterDB.EC_Bedroom_Registers[(REG_ENVC_MAX - REG_HUMIDITY)] = MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_MSBEDHUMID)];
-    }else{
-         MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_MSBEDHUMID)] = MasterDB.EC_Bedroom_Registers[(REG_ENVC_MAX - REG_HUMIDITY)];
-    }
-
-    if (MasterDB.LCD_Saloon_HVAC_Flag[(REG_HVAC_MAX - REG_HVAC_SALNTEMP)]){
-        MasterDB.EC_Saloon_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)] = MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_SALNTEMP)];
-    }else{
-        MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_SALNTEMP)] = MasterDB.EC_Saloon_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)];
-    }
-
-    if (MasterDB.LCD_Saloon_HVAC_Flag[(REG_HVAC_MAX - REG_HVAC_SALNHUMID)]){
- MasterDB.EC_Saloon_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)] = MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_SALNHUMID)];
-    }else{
-   MasterDB.LCD_Saloon_HVAC[(REG_HVAC_MAX - REG_HVAC_SALNHUMID)] = MasterDB.EC_Saloon_Registers[(REG_ENVC_MAX - REG_TEMPR_ROOM)];
-    }
-
 
 
     return 1;

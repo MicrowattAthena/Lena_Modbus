@@ -5,13 +5,10 @@
 
 class workerthread :public QThread
 {
+    Q_OBJECT
 public:
     workerthread();
     void run();
-
-signals:
-
-public slots:
 
 };
 

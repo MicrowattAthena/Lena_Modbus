@@ -94,14 +94,19 @@ int readECslave(int IDnumber, char slavename){
 
     setmodbusslave(IDnumber);
    if (readaddresses(REGS_ENVC_BASE- 1,REG_ENVC_MAX - REGS_ENVC_BASE))
-
-       qWarning() << "EC Register Read Successful - Writing to DB";
-
-       writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
-
+   {
+        qWarning() << "EC Register Read Successful - Writing to DB";
+        writeDB(ENVIRONMENTAL_CONTROL,slavename,REGISTERS);
+   }else{
+       // qWarning() << "EC Read Failed";
+   }
    if (readcoils(COILS_ENVC_BASE- 1,COIL_ENVC_MAX - COILS_ENVC_BASE))
-           qWarning() << "EC Coil Read Successful - Writing to DB";
-       writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
+   {
+        qWarning() << "EC Coil Read Successful - Writing to DB";
+        writeDB(ENVIRONMENTAL_CONTROL,slavename,COILS);
+   }else{
+      //  qWarning() << "EC Read Failed";
+   }
     return 1;
 }
 
@@ -118,7 +123,6 @@ int writeLCDRTU(int IDNumber){
     rtcbuffer[4] = tm.tm_mon + 1;
     rtcbuffer[5] = tm.tm_year + 1900;
     rtcbuffer[6] = 1;
-
     write_registers(RTC_BASE -1,7, rtcbuffer);
     return 1;
 }

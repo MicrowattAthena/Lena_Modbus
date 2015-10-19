@@ -23,10 +23,11 @@ void workerthread::run()
 
         while(1){
 
-            qWarning() << "WT:Polling Slaves";
+         qWarning() << "WT:Polling Slaves";
          pollslaves();
          managelcd();
-        processqueue();
+         processqueue();
+
          }
 
      }else{
@@ -35,5 +36,4 @@ void workerthread::run()
         //Sent signal for failed modbus!
     }
 }
-
 

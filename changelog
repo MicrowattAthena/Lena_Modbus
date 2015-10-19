@@ -1,0 +1,20 @@
+Future Changes:
+
+	The worker-thread needs to set a signal when connected to modbus and a full read of slaves is done: Then the GUI can be displayed.
+	A loading screen needs to be displayed beforehand.
+	
+	The GUI of ENV needs to be prettified.
+	Management of slaves (LCD, ENV, GEN) needs to be finished - Any values it may recieve from elsewhere, alarm settings etc.
+	Alarm States must be managed (display on front page)
+	
+	
+
+Current Version: V.0.1.0
+
+	V.0.1.0
+	
+		Whoops, should have started a change log earlier!
+		The bulk of the programming is done.
+		Basic functionality of Env Control is done, GUI needs to be made more pretty.
+		Groundsworks of functionality of Engine and LCD done, just need to work on GUI side.
+

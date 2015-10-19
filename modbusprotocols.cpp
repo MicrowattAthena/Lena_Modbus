@@ -123,7 +123,7 @@ int report_slave_ID(){
 }
 
 int write_registers(int address, int length, uint16_t data[]){
-int retries = 3;
+int retries = 4;
 
 do {
     if (modbus_write_registers(ctx,address,length,data)==length){

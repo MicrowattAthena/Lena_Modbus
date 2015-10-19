@@ -38,6 +38,7 @@ int getdatafromGUI(char,char,char, int, uint16_t);
 int createqueue(char,char,char,int,int);
 int writeDB(char, char, char);
 int pollslaves();
+int managelcdalarms();
 int setslaveRTU(void);
 int compareDB(char, char, char);
  int writequeue(char,char,char,int, int);

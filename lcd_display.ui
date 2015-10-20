@@ -726,10 +726,10 @@ Brightness</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>61</width>
-     <height>31</height>
+     <x>10</x>
+     <y>10</y>
+     <width>71</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -759,7 +759,7 @@ Brightness</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>15</y>
      <width>461</width>
      <height>31</height>
     </rect>

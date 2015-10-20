@@ -17,10 +17,10 @@ typedef enum {
     REG_ANALOG_IN6,
     REG_ANALOG_IN7,
     REG_ANALOG_IN8,
-    REG_ANALOG_IN12,
-    REG_ANALOG_IN13,
-    REG_ANALOG_IN14,
-    REG_ANALOG_IN15,
+    REG_ANALOG_IN12, // Service Battery Voltage
+    REG_ANALOG_IN13, // Starter Battery Voltage
+    REG_ANALOG_IN14, // Other Battery Voltage
+    REG_ANALOG_IN15, // Service Battery Current
     REG_AIN1_FSD,
     REG_AIN2_FSD,
     REG_AIN3_FSD,
@@ -30,7 +30,7 @@ typedef enum {
     REG_AIN7_FSD,
     REG_AIN8_FSD,
 
-    REG_BAT_FSD,
+    REG_BAT_FSD, // Battery Current FSD
     REG_SRV_BAT_CAP, // Not Implemented Yet
     REG_SRV_BAT_LOW_ALRM, // Not Implemented Yet
     REG_SRV_BLG_PMP_SECS, // Not Implemented Yet

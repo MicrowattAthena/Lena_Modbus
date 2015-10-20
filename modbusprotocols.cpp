@@ -134,7 +134,7 @@ do {
         qWarning() << "Failed to Write, re-attempting";
     }
 }
-while( retries <=  0);
+while( retries >  0);
      qWarning() << "Failed to Write, reached retry limit!";
       return 0;
 }

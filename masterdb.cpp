@@ -107,7 +107,7 @@ struct queuefile {
     int address;
     int value;
 };
-   queuefile GUIqueuefile[30];
+   queuefile GUIqueuefile[42];
    int queuecounter = 0;
 
 struct database MasterDB;
@@ -174,7 +174,7 @@ int pollslaves() {
   qWarning() << "Reading Generals";
     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
         readgeneralslave(GeneralSlaveIDs[i],GeneralSlaveName[i]);
-     processqueue();
+
   qWarning() << "Reading ECs";
     for (int i = 0; ECSlaveIDs[i] != 0; i++)
         readECslave(ECSlaveIDs[i],ECSlaveName[i]);

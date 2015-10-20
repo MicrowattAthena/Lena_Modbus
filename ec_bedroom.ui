@@ -49,7 +49,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -317,13 +317,26 @@ Temperature</string>
     <attribute name="title">
      <string>Thresholds</string>
     </attribute>
-    <widget class="QSlider" name="control_roomtemp">
+    <widget class="QLabel" name="control_displayroomtemp">
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>10</y>
-       <width>21</width>
-       <height>101</height>
+       <y>0</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>n/a</string>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_roomtemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="minimum">
@@ -332,81 +345,55 @@ Temperature</string>
      <property name="maximum">
       <number>25</number>
      </property>
-     <property name="value">
-      <number>18</number>
-     </property>
-     <property name="tracking">
-      <bool>false</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
     </widget>
-    <widget class="QLabel" name="label_11">
+    <widget class="QLabel" name="control_displayhighhumidity">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>110</y>
-       <width>101</width>
-       <height>41</height>
+       <x>230</x>
+       <y>0</y>
+       <width>51</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Room
-Temperature</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>n/a</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_12">
+    <widget class="QLabel" name="control_displaylowhumidity">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>110</y>
-       <width>101</width>
-       <height>41</height>
+       <x>320</x>
+       <y>0</y>
+       <width>51</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Low
-Humidity</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>n/a</string>
      </property>
     </widget>
-    <widget class="QSlider" name="control_watertemp">
+    <widget class="QDial" name="control_co2limit">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>10</y>
-       <width>21</width>
-       <height>101</height>
+       <x>370</x>
+       <y>20</y>
+       <width>71</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="minimum">
-      <number>25</number>
+      <number>400</number>
      </property>
      <property name="maximum">
-      <number>60</number>
-     </property>
-     <property name="value">
-      <number>25</number>
-     </property>
-     <property name="tracking">
-      <bool>false</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <number>3000</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>110</y>
-       <width>101</width>
+       <x>190</x>
+       <y>90</y>
+       <width>91</width>
        <height>41</height>
       </rect>
      </property>
@@ -418,36 +405,11 @@ Humidity</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="control_highhumidity">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>10</y>
-       <width>21</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="value">
-      <number>18</number>
-     </property>
-     <property name="tracking">
-      <bool>false</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_14">
      <property name="geometry">
       <rect>
        <x>360</x>
-       <y>110</y>
+       <y>90</y>
        <width>101</width>
        <height>41</height>
       </rect>
@@ -460,36 +422,41 @@ Limit</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="control_lowhumidity">
+    <widget class="QLabel" name="control_displaywatertemp">
      <property name="geometry">
       <rect>
-       <x>310</x>
-       <y>10</y>
-       <width>21</width>
-       <height>101</height>
+       <x>140</x>
+       <y>0</y>
+       <width>51</width>
+       <height>31</height>
       </rect>
      </property>
-     <property name="minimum">
-      <number>0</number>
+     <property name="text">
+      <string>n/a</string>
      </property>
-     <property name="maximum">
-      <number>100</number>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>90</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
      </property>
-     <property name="value">
-      <number>18</number>
+     <property name="text">
+      <string>Room
+Temperature</string>
      </property>
-     <property name="tracking">
-      <bool>false</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_20">
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>110</y>
+       <y>90</y>
        <width>101</width>
        <height>41</height>
       </rect>
@@ -502,94 +469,85 @@ Temperature</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="control_co2limit">
+    <widget class="QLabel" name="label_12">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>10</y>
-       <width>21</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>400</number>
-     </property>
-     <property name="maximum">
-      <number>3000</number>
-     </property>
-     <property name="value">
-      <number>400</number>
-     </property>
-     <property name="tracking">
-      <bool>false</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="control_displayroomtemp">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>40</y>
-       <width>51</width>
-       <height>31</height>
+       <x>280</x>
+       <y>90</y>
+       <width>91</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>n/a</string>
+      <string>Low
+Humidity</string>
      </property>
-    </widget>
-    <widget class="QLabel" name="control_displaywatertemp">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>40</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>n/a</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="control_displayhighhumidity">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>40</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>n/a</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="control_displaylowhumidity">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>40</y>
-       <width>51</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>n/a</string>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="control_displayco2limit">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>40</y>
+       <x>380</x>
+       <y>0</y>
        <width>51</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>n/a</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_watertemp">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>20</y>
+       <width>71</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>25</number>
+     </property>
+     <property name="maximum">
+      <number>60</number>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_lowhumidity">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>20</y>
+       <width>71</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_highhumidity">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>20</y>
+       <width>71</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
      </property>
     </widget>
    </widget>
@@ -597,27 +555,106 @@ Temperature</string>
     <attribute name="title">
      <string>Board Control</string>
     </attribute>
-    <widget class="QSlider" name="control_ledtolerance">
+    <widget class="QDial" name="control_blight">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>80</y>
-       <width>160</width>
-       <height>20</height>
+       <x>330</x>
+       <y>30</y>
+       <width>81</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>1000</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_23">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>110</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Backlight
+Brightness</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_backlightbrightness">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>30</y>
+       <width>81</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>8</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayblight">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>10</y>
+       <width>61</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>N/A</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="control_displayledtolerance">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>61</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>N/A</string>
+     </property>
+    </widget>
+    <widget class="QDial" name="control_ledtolerance">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>30</y>
+       <width>81</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="maximum">
       <number>10</number>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
     </widget>
     <widget class="QLabel" name="label_21">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>100</y>
+       <x>30</x>
+       <y>110</y>
        <width>121</width>
        <height>31</height>
       </rect>
@@ -630,95 +667,10 @@ Tolerance (°C)</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QSlider" name="control_blight">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>80</y>
-       <width>160</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>1000</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_22">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>100</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Backlight
-Timeout (sec)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="control_displayledtolerance">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>70</y>
-       <width>61</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>N/A</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="control_displayblight">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>70</y>
-       <width>61</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>N/A</string>
-     </property>
-    </widget>
-    <widget class="QSlider" name="control_backlightbrightness">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>20</y>
-       <width>160</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>8</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
     <widget class="QLabel" name="control_displaybacklightbrightness">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>220</x>
        <y>10</y>
        <width>61</width>
        <height>15</height>
@@ -733,18 +685,18 @@ Timeout (sec)</string>
       <string>N/A</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_23">
+    <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>40</y>
+       <x>310</x>
+       <y>110</y>
        <width>121</width>
        <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Backlight
-Brightness</string>
+Timeout (sec)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -775,7 +727,7 @@ Brightness</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>15</y>
      <width>461</width>
      <height>31</height>
     </rect>
@@ -795,10 +747,10 @@ Brightness</string>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>61</width>
-     <height>31</height>
+     <x>10</x>
+     <y>10</y>
+     <width>71</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">

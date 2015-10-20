@@ -17,6 +17,7 @@ EC_Saloon::EC_Saloon(QWidget *parent) :
     this->setWindowFlags(Qt::Window);
     this->showFullScreen();
     QObject::connect(handler,SIGNAL(requestupdate()),this,SLOT(update_ecs_values()));
+    update_ecs_values();
 }
 
 
@@ -93,8 +94,6 @@ void EC_Saloon::checkuserinput(char slavetype, char slavename, char addresstype,
 
     //Measurement Tab
     buffer = get_databasevalues(registerlocation);
-    qWarning() << buffer;
-    qWarning() << value;
     if (buffer == value){
        //        qWarning() << "NOT USER UPDATED!";
     }else{
@@ -106,31 +105,31 @@ void EC_Saloon::checkuserinput(char slavetype, char slavename, char addresstype,
 
 void EC_Saloon::on_control_roomtemp_valueChanged(int value)
 {
-    ui->control_displayroomtemp->setText(QString::number(value));
+    ui->control_displayroomtemp->setText(QString::number(value) + " °C");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_ROOM_TEMPR_THRESH,value);
 }
 
 void EC_Saloon::on_control_watertemp_valueChanged(int value)
 {
-    ui->control_displaywatertemp->setText(QString::number(value));
+    ui->control_displaywatertemp->setText(QString::number(value)+ " °C");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_FLOW_TEMPR_THRESH,value);
 }
 
 void EC_Saloon::on_control_highhumidity_valueChanged(int value)
 {
-    ui->control_displayhighhumidity->setText(QString::number(value));
+    ui->control_displayhighhumidity->setText(QString::number(value) + "%");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_HUMIHI_THRESH,value);
 }
 
 void EC_Saloon::on_control_lowhumidity_valueChanged(int value)
 {
-    ui->control_displaylowhumidity->setText(QString::number(value));
+    ui->control_displaylowhumidity->setText(QString::number(value) + "%");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_HUMILO_THRESH,value);
 }
 
 void EC_Saloon::on_control_co2limit_valueChanged(int value)
 {
-    ui->control_displayco2limit->setText(QString::number(value));
+    ui->control_displayco2limit->setText(QString::number(value) + " ppm");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_CO2ALRM_THRESH,value);
 }
 
@@ -142,7 +141,7 @@ void EC_Saloon::on_control_backlightbrightness_valueChanged(int value)
 
 void EC_Saloon::on_control_ledtolerance_valueChanged(int value)
 {
-    ui->control_displayledtolerance->setText(QString::number(value));
+    ui->control_displayledtolerance->setText(QString::number(value) + " °C");
     checkuserinput(ENVIRONMENTAL_CONTROL,SALOON,REGISTERS,REG_TEMPLED_TOLER,value);
 }
 

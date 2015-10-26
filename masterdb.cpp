@@ -119,7 +119,7 @@ struct queuefile {
     int address;
     int value;
 };
-  struct queuefile GUIqueuefile[42];
+  struct queuefile GUIqueuefile[99];
    int queuecounter = 0;
 
    struct linked_registers Linked_DB[50];
@@ -213,7 +213,68 @@ int managelcd() {
 }
 
 int managelcdalarms()
-{  //Alarms also need to be monitored. Check Alarm States and set alarm if necessary
+{  //Alarms also need to be monitored. Check Alarm States, then changed value on DB and in registers
+   //Currently untested
+
+    uint buffer, buffer2;
+
+
+    // Engine Temperature Coils
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_TEMPSENSOR);
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_HITEMPWARN);
+    updateDB(LCD_CONTROL,SALOON,WARNING,COIL_WARN_HIGHTEMP,(buffer > buffer2));
+    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_WARN_HIGHTEMP, (buffer > buffer2));
+
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_HITEMPALRM);
+    updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_HIGHTEMP,(buffer > buffer2));
+    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_HIGHTEMP, (buffer > buffer2));
+
+    // Portable Water Coils
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATSTATUS);
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATWARN);
+    updateDB(LCD_CONTROL,SALOON,WARNING,COIL_WARN_POTWATERLOW, (buffer < buffer2));
+    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_WARN_POTWATERLOW, (buffer < buffer2));
+
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATALARM);
+    updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_POTWATERLOW, (buffer < buffer2));
+    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_POTWATERLOW, (buffer < buffer2));
+
+    // Waste Water Coil
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSWATSTATUS);
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSWATALARM);
+    updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEWATHIGH, (buffer > buffer2));
+    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEWATHIGH, (buffer > buffer2));
+
+    // Waste Filler Coil
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSFILLSTATUS);
+    buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSFILLALARM);
+    updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEFILLLOW, (buffer < buffer2));
+    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEFILLLOW, (buffer < buffer2));
+
+    //Inverter Fault Coil
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTERFAULT);
+    updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVFAULT, (buffer > 0));
+    writequeue(LCD_CONTROL, SALOON,ALARM,COIL_ALRM_INVFAULT, (buffer > 0));
+
+    //Inverter Low Battery
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS, REG_DCSYS_INVERTLOWBATT);
+    updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVLOWBAT, (buffer > 0));
+    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVLOWBAT, (buffer > 0));
+
+    //Inverter Overload
+
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTOVERLOAD);
+    updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
+    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
+
+    //Inverter Overtemp
+
+    buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTOVERTEMP);
+    updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERTEMP, (buffer > 0));
+    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
+
+    //Bilge Pump Run Long
+   // Uhh whats the condition for this?
 
 
     return 1;
@@ -272,16 +333,52 @@ int initialiseLCDlinks()
 {
 
     // Creates a link betweeen LCD registers and other registers
-    //To be completed - Will test with ENV/LCD First
 
- /*   Linked_DB[0].LCD_register  = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_STARTBATTVOLT - DCSYSTEM_BASE};
-    Linked_DB[0].nonLCD_register= {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN13 - REGS_GENERAL_BASE};
+    // Environmental Control Links
 
-    Linked_DB[1].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_SRVBATTVOLT - DCSYSTEM_BASE};
-    Linked_DB[1].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN12 - REGS_GENERAL_BASE};
-*/
     Linked_DB[0].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_SALNSETTEMP};
     Linked_DB[0].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_ROOM_TEMPR_THRESH};
+
+    Linked_DB[1].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_MSBEDSETTEMP};
+    Linked_DB[1].nonLCD_register = {ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS, REG_ROOM_TEMPR_THRESH};
+
+    Linked_DB[2].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_RADFANSSAL1};
+    Linked_DB[2].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_FANS_MODE};
+
+    Linked_DB[3].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_RADFANSSAL2};
+    Linked_DB[3].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_FANS_MODE};
+
+    Linked_DB[4].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_RADFANSBED};
+    Linked_DB[4].nonLCD_register = {ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS, REG_FANS_MODE};
+
+    Linked_DB[5].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_SALNTEMP};
+    Linked_DB[5].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_TEMPR_ROOM};
+
+    Linked_DB[6].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_MSBEDTEMP};
+    Linked_DB[6].nonLCD_register = {ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS, REG_TEMPR_ROOM};
+
+    Linked_DB[7].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_SALNHUMID};
+    Linked_DB[7].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_HUMIDITY};
+
+    Linked_DB[8].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_MSBEDHUMID};
+    Linked_DB[8].nonLCD_register = {ENVIRONMENTAL_CONTROL,BEDROOM,REGISTERS, REG_HUMIDITY};
+
+    // General - Engine Links
+
+    Linked_DB[9].LCD_register  = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_STARTBATTVOLT};
+    Linked_DB[9].nonLCD_register= {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN13};
+
+    Linked_DB[10].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_SRVBATTVOLT};
+    Linked_DB[10].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN12};
+
+    Linked_DB[11].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_BATTCURRENT};
+    Linked_DB[11].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_BAT_FSD};
+
+    Linked_DB[12].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_ENG_ENGSTART};
+    Linked_DB[12].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_GEN_ENG_MODE};
+
+    Linked_DB[13].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_BATTCURRENT};
+    Linked_DB[13].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_BAT_FSD};
     linkedlength = 0;
 }
 
@@ -543,6 +640,10 @@ int sendflagofDB(char slavetype, char slavename, char addresstype, int address) 
                 return MasterDB.LCD_Saloon_LCD_Flag[address - 1];
             case GYRO:
                 return MasterDB.LCD_Saloon_Gyro_Flag[address - 1];
+            case ALARM:
+                return MasterDB.LCD_Saloon_Alarm_Flag[address - 1];
+            case WARNING:
+                return MasterDB.LCD_Saloon_Warning_Flag[address -1];
             break;
             }
 
@@ -624,6 +725,10 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
                 return MasterDB.LCD_Saloon_LCD[address - 1];
             case GYRO:
                 return MasterDB.LCD_Saloon_Gyro[address - 1];
+            case ALARM:
+                return MasterDB.LCD_Saloon_Alarm[address -1];
+            case WARNING:
+                return MasterDB.LCD_Saloon_Warning[address -1];
             break;
             }
 

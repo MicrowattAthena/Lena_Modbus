@@ -1,18 +1,23 @@
 Future Changes:
 
-	Under MasterDB, buildLCDDB, work out how to get value to write.
 	
 	Need Testing.
 
 	The worker-thread needs to set a signal when connected to modbus and a full read of slaves is done: Then the GUI can be displayed.
 	A loading screen needs to be displayed beforehand.
 	
-	Management of LCD needs to be finished - Any values it may recieve from elsewhere, alarm settings etc.
+	Management of LCD needs to be finished - buildLCDdb must be worked out. Put in a check for zero value registers?
 	Alarm States must be managed (display on front page)
 	
 	Need to Discuss what the min/max values should be for engine general board values
 
-Current Version: V.0.1.1
+Current Version: V.0.1.3
+	
+	V 0.1.3 - 26/10/2015
+
+		Linked List Now Populated
+
+		Alarms and Warnings for coils now managed. Bilge Pump condition unknown and function untested.
 	
 	V 0.1.2 - 26/10/2015
 

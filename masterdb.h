@@ -31,12 +31,14 @@ extern "C" {
 
 
 int initialiseDB();
+int sendflagofDB(char,char,char,int);
+int initialiseLCDlinks();
 int resetflags();
 int managelcd();
 int senddatatoGUI(char,char,char, int);
-int getdatafromGUI(char,char,char, int, uint16_t);
 int createqueue(char,char,char,int,int);
 int writeDB(char, char, char);
+int updateDB(char,char,char,int, int);
 int pollslaves();
 int managelcdalarms();
 int setslaveRTU(void);

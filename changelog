@@ -1,15 +1,31 @@
 Future Changes:
 
+	Under MasterDB, buildLCDDB, work out how to get value to write.
+	
+	Need Testing.
+
 	The worker-thread needs to set a signal when connected to modbus and a full read of slaves is done: Then the GUI can be displayed.
 	A loading screen needs to be displayed beforehand.
 	
-	The GUI of ENV needs to be prettified.
-	Management of slaves (LCD, ENV, GEN) needs to be finished - Any values it may recieve from elsewhere, alarm settings etc.
+	Management of LCD needs to be finished - Any values it may recieve from elsewhere, alarm settings etc.
 	Alarm States must be managed (display on front page)
 	
-	
+	Need to Discuss what the min/max values should be for engine general board values
 
-Current Version: V.0.1.0
+Current Version: V.0.1.1
+	
+	V 0.1.2 - 26/10/2015
+
+		Linked List Functioning - Changes made through the UI will now update both the relevant slave, but also any linked addresses in LCD. Linked Lists 
+		needs to be populated.
+
+		Still need to get Changes made through slave devices to function correctly.
+
+	V 0.1.1 - 20/10/2015
+
+		Engine and ENV complete - May need additional work on display, but code elements all there and working
+		Replaced sliders with dials - Easier to use on touchscreen
+		Added Units to Engine and ENV elements.
 
 	V.0.1.0
 	

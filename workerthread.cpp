@@ -16,15 +16,17 @@ void workerthread::run()
      qWarning() << "Initialised Worker Thread";
      //Initialise Modbus
 
-    if (initialisemodbus()){
+   if (initialisemodbus()){
     qWarning() << "WT:Setting RTUs";
 
     setslaveRTU();
-
+   initialiseLCDlinks();
         while(1){
 
          qWarning() << "WT:Polling Slaves";
+         processqueue();
          pollslaves();
+         processqueue();
          managelcd();
          processqueue();
 

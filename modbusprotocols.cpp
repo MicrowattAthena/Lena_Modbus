@@ -31,7 +31,9 @@ else {
     return 1;
     }
 }
-
+int setdebugmode(){
+    modbus_set_debug(ctx, TRUE);
+}
 
 int setRTUmode(void){
 int success;
@@ -151,7 +153,7 @@ int write_coils(int address, int length, uint8_t data[]){
             qWarning() << "Failed to Write, re-attempting";
         }
     }
-    while( retries <=  0);
+    while( retries >=  0);
          qWarning() << "Failed to Write, reached retry limit!";
           return 0;
 }
@@ -167,7 +169,7 @@ int write_single_register(int address, uint16_t data){
             qWarning() << "Failed to Write, re-attempting";
         }
     }
-    while( retries <=  0);
+    while( retries >=  0);
          qWarning() << "Failed to Write, reached retry limit!";
           return 0;
 }

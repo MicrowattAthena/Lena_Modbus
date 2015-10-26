@@ -9,6 +9,7 @@ extern uint8_t coil_buffer[64];
 
 int initialiseRTU(void);
 int setRTUmode(void);
+int setdebugmode(void);
 int settimeouts(void);
 int RTU_connect(void);
 int report_slave_ID(void);

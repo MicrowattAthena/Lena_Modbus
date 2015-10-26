@@ -15,6 +15,7 @@ int initialisemodbus(void){
 
     int retries = 0;
     initialiseRTU();
+    //setdebugmode();
     setRTUmode();
     settimeouts();
 

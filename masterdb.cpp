@@ -25,6 +25,18 @@ extern "C" {
   //  const int ECSlaveIDs[] = { 0 };
   //  const char ECSlaveName[] = {'0'};
 
+struct register_construct
+{
+    char slavetype; char slavename; char addresstype; int address;
+};
+struct linked_registers
+{
+    struct register_construct LCD_register;
+    struct register_construct nonLCD_register;
+};
+
+
+
 struct database {
 
    int EC_Bedroom_Registers[REG_ENVC_MAX - REGS_ENVC_BASE];
@@ -107,8 +119,11 @@ struct queuefile {
     int address;
     int value;
 };
-   queuefile GUIqueuefile[42];
+  struct queuefile GUIqueuefile[42];
    int queuecounter = 0;
+
+   struct linked_registers Linked_DB[50];
+   int linkedlength;
 
 struct database MasterDB;
 int setslaveRTU(void){
@@ -169,7 +184,7 @@ int pollslaves() {
     resetflags();
 
     // check slave ids and types of slave
-     processqueue();
+
 
   qWarning() << "Reading Generals";
     for (int i = 0; GeneralSlaveIDs[i] !=0;i++)
@@ -182,7 +197,7 @@ int pollslaves() {
      for (int i = 0; LCDSlaveIDs[i] != 0;i++)
           //pass ID to modbusmanagement
           readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
-      processqueue();
+
 
     return 1;
 }
@@ -193,7 +208,6 @@ int managelcd() {
     //The program needs to set the correct values to the LCD DB and then rewrite to the LCDs.
 
     buildlcdDB();
-
     managelcdalarms();
     return 1;
 }
@@ -204,14 +218,71 @@ int managelcdalarms()
 
     return 1;
 }
-int buildlcdDB() {
-//Not so simple function: some data is shared between slaves. However, determining what data to use if the value is changed
-// in one slave isnt so simple. If a flag has been set for the masterDB, indicating that the value has changed outside of
-// the program, then that value should not be overwritten.
-// A messy solution, but should work.
+int buildlcdDB()
+{
+    /*This needs to check the flags set when reading from DB.
+    //For a Linked Variable:
+    //If neither value has been changed, nothing must be done
+    //If both values have changed (should occur on first read OR if a change has occured in GUI), nothing must be done
+    //If one value has changed (i.e. it has been overwritten outside the program),
+     this changed value must be written to the other slave */
+
+    //For some reason the senddatatoGUI function causes the program to crash. The function runs fine, but when it attempts to
+    //to return to this function, it fails. However, it works fine when called from a different function (?)
+    int i; int lcdflag; int nonlcdflag;
+    uint buffer;
+
+    for (i = 0; i <=linkedlength; i++){
+
+        lcdflag = (sendflagofDB(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
+                                Linked_DB[i].LCD_register.addresstype, Linked_DB[i].LCD_register.address));
+
+        nonlcdflag = (sendflagofDB(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
+                                   Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address));
+
+     /*   if (lcdflag ^ nonlcdflag)
+        {
+            qWarning()<< "Non-Matching Linked!";
+            qWarning()<< nonlcdflag;
+            if (lcdflag)
+            {
+
+                senddatatoGUI(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
+                                        Linked_DB[i].LCD_register.addresstype,Linked_DB[i].LCD_register.address);
+                    qWarning()<< buffer;
+              writequeue(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
+                           Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address,buffer);
+
+            }else{
+                qWarning()<<i;
+                buffer = senddatatoGUI(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
+                                       Linked_DB[i].nonLCD_register.addresstype,Linked_DB[i].nonLCD_register.address);
+                writequeue(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
+                           Linked_DB[i].LCD_register.addresstype, Linked_DB[i].LCD_register.address, buffer);
+
+            }
+        } */
+    }
 
 
     return 1;
+}
+
+int initialiseLCDlinks()
+{
+
+    // Creates a link betweeen LCD registers and other registers
+    //To be completed - Will test with ENV/LCD First
+
+ /*   Linked_DB[0].LCD_register  = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_STARTBATTVOLT - DCSYSTEM_BASE};
+    Linked_DB[0].nonLCD_register= {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN13 - REGS_GENERAL_BASE};
+
+    Linked_DB[1].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_SRVBATTVOLT - DCSYSTEM_BASE};
+    Linked_DB[1].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_ANALOG_IN12 - REGS_GENERAL_BASE};
+*/
+    Linked_DB[0].LCD_register = {LCD_CONTROL,SALOON,HVAC,REG_HVAC_SALNSETTEMP};
+    Linked_DB[0].nonLCD_register = {ENVIRONMENTAL_CONTROL,SALOON,REGISTERS, REG_ROOM_TEMPR_THRESH};
+    linkedlength = 0;
 }
 
 void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
@@ -240,34 +311,80 @@ void getqueuedata(char slavetype, char slavename, char addresstype, int address,
 
     if (newdata == 1)
     {
+        queuecounter +=1;
         qWarning() << "Adding Value to Queue";
+
         GUIqueuefile[queuecounter].slavetype = slavetype;
          GUIqueuefile[queuecounter].slavename = slavename;
           GUIqueuefile[queuecounter].addresstype = addresstype;
            GUIqueuefile[queuecounter].address = address;
             GUIqueuefile[queuecounter].value = value;
-        queuecounter +=1;
+
+
     }
 
 }
 
 void deletequeuedata () {
     qWarning()<< "Deleting Queue";
+    int i;
+    for (i = 0; i<= queuecounter; i++)
+    {
+        GUIqueuefile[i].address = 0;
+        GUIqueuefile[i].addresstype = 0;
+        GUIqueuefile[i].slavename = 0;
+        GUIqueuefile[i].slavetype = 0;
+    }
+
     queuecounter = 0;
 }
 
 void processqueue(){
+
+    // Writes queue files to slaves, and checks if the addresses are linked.
+    // If so, it also writes the value to the linked address.
+    // NEEDS TO BE TESTED
     qWarning()<< "Processing Queue";
-    uint i;
-    for (i = queuecounter;i <= 0; i--)
-    {
+
+    uint i; uint y;
+    qWarning()<< queuecounter;
+    for (i = queuecounter;i > 0; i--)
+    {    
+        qWarning()<< GUIqueuefile[i].addresstype;
+        qWarning()<< GUIqueuefile[i].slavetype;
     writequeue(GUIqueuefile[i].slavetype, GUIqueuefile[i].slavename, GUIqueuefile[i].addresstype, GUIqueuefile[i].address,GUIqueuefile[i].value);
+        for (y = 0; y <=linkedlength; y++)
+        {
+
+         if (GUIqueuefile[i].slavetype == LCD_CONTROL)
+            {
+             qWarning()<<"Checking for link in LCD CONTROL";
+              if ((GUIqueuefile[i].addresstype == Linked_DB[y].LCD_register.addresstype) && (GUIqueuefile[i].address == Linked_DB[y].LCD_register.address))
+                {
+                 qWarning() << "Link in LCD Control found!";
+                 writequeue(Linked_DB[y].nonLCD_register.slavetype, Linked_DB[y].nonLCD_register.slavename,
+                            Linked_DB[y].nonLCD_register.addresstype, Linked_DB[y].nonLCD_register.address, GUIqueuefile[i].value);
+                }
+          }else{
+            qWarning()<< "Checking for link in nonLCD CONTROL";
+
+            if ((GUIqueuefile[i].addresstype == Linked_DB[y].nonLCD_register.addresstype) && (GUIqueuefile[i].address == Linked_DB[y].nonLCD_register.address))
+                {
+                 qWarning() << "Link in NONLCD Control found!";
+                 writequeue(Linked_DB[y].LCD_register.slavetype, Linked_DB[y].LCD_register.slavename,
+                            Linked_DB[y].LCD_register.addresstype, Linked_DB[y].LCD_register.address, GUIqueuefile[i].value);
+                 }
+            }
+        }
+
     }
     deletequeuedata();
 }
 
 int writequeue(char slavetype, char slavename, char addresstype, int address, int value) {
+    //First update internal DB
 
+    updateDB(slavetype,slavename, addresstype,address,value);
     //This needs to be written to slaves
 
     switch (slavetype) {
@@ -332,6 +449,8 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
                 write_single_coil(address - 1, value);
                 break;
             default:
+                qWarning()<< "Writing to LCD 1";
+                             qWarning() << address -1;
                 write_single_register(address - 1,value);
                 break;
             break;
@@ -346,6 +465,8 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
         write_single_coil(address - 1, value);
         break;
     default:
+         qWarning()<< "Writing to LCD 1";
+                      qWarning() << address -1;
         write_single_register(address - 1,value);
         break;
     break;
@@ -354,9 +475,84 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
 }
 return 0;
 }
+int sendflagofDB(char slavetype, char slavename, char addresstype, int address) {
+    switch (slavetype) {
+    case ENVIRONMENTAL_CONTROL:
+
+        switch (slavename) {
+        case BEDROOM:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.EC_Bedroom_Registers_Flag[address -1];
+            case COILS:
+                return MasterDB.EC_Bedroom_Coils_Flag[address - 1];
+            break;
+            }
+
+         case SALOON:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.EC_Saloon_Registers_Flag[address - 1];
+            case COILS:
+                return MasterDB.EC_Saloon_Coils_Flag[address - 1];
+            break;
+            }
+        }
+
+    case GENERAL_BOARD:
+
+        switch (slavename){
+        case GENERAL_ENGINE:
+            switch (addresstype) {
+            case REGISTERS:
+                return MasterDB.General_Engine_Registers_Flag[address - 1];
+            case COILS:
+                return MasterDB.General_Engine_Coils_Flag[address - 1];
+            break;
+        }
+
+
+    break;
+    }
+
+
+
+
+    case LCD_CONTROL:
+
+            switch (addresstype) {
+            case ENGINE:
+                return MasterDB.LCD_Saloon_Engine_Flag[address - 1];
+            case DCSYS:
+                return MasterDB.LCD_Saloon_DCsys_Flag[address - 1];
+            case ACSYS:
+                return MasterDB.LCD_Saloon_ACsys_Flag[address - 1];
+            case HVAC:
+                return MasterDB.LCD_Saloon_HVAC_Flag[address - 1];
+            case TANKS:
+                return MasterDB.LCD_Saloon_Tanks_Flag[address -1];
+            case RR:
+                return MasterDB.LCD_Saloon_RR_Flag[address - 1];
+            case GPS:
+                return MasterDB.LCD_Saloon_GPS_Flag[address - 1];
+            case SONAR:
+                return MasterDB.LCD_Saloon_Sonar_Flag[address - 1];
+            case LIGHTS:
+                return MasterDB.LCD_Saloon_Lights_Flag[address - 1];
+            case LCD:
+                return MasterDB.LCD_Saloon_LCD_Flag[address - 1];
+            case GYRO:
+                return MasterDB.LCD_Saloon_Gyro_Flag[address - 1];
+            break;
+            }
+
+
+}
+return 0;
+}
 
 int senddatatoGUI(char slavetype, char slavename, char addresstype, int address) {
-    // The GUI will display some information from the DB.
+    // The will return some information from the DB.
     
     switch (slavetype) {
     case ENVIRONMENTAL_CONTROL:
@@ -374,6 +570,9 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
          case SALOON:
             switch (addresstype) {
             case REGISTERS:
+//                qWarning()<<"Accessing Registers";
+
+  //              qWarning()<< MasterDB.EC_Saloon_Registers[address - 1];
                 return MasterDB.EC_Saloon_Registers[address - 1];
             case COILS:
                 return MasterDB.EC_Saloon_Coils[address - 1];
@@ -433,6 +632,171 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
 return 0;
 }
 
+int updateDB(char slavetype, char slavename, char addresstype, int address, int value)
+{
+    // Updates a single value in the internal DB.
+
+    switch (slavetype) {
+    case ENVIRONMENTAL_CONTROL:
+        switch (slavename) {
+        case BEDROOM:
+            switch (addresstype) {
+            case REGISTERS:
+                //write to EC Bedroom registers
+                MasterDB.EC_Bedroom_Registers[address - REGS_ENVC_BASE] = value;
+                break;
+            case COILS:
+                //Write to EC Bedroom Coils
+                   MasterDB.EC_Bedroom_Coils[address - COILS_ENVC_BASE] = value;
+                break;
+            default:
+                //SHOULDNT HAPPEN
+                break;
+            }
+            break;
+        case SALOON:
+            switch (addresstype) {
+            case REGISTERS:
+                //Write to EC Saloon Registers
+                   MasterDB.EC_Saloon_Registers[address - REGS_ENVC_BASE] = value;
+
+                break;
+            case COILS:
+                //Write to EC Saloon Coils
+                MasterDB.EC_Saloon_Coils[address - COILS_ENVC_BASE] = value;
+            break;
+
+            }
+            break;
+
+        }
+        break;
+
+    case GENERAL_BOARD:
+        switch (slavename) {
+        case GENERAL_ENGINE:
+            switch (addresstype) {
+            case REGISTERS:
+                   MasterDB.General_Engine_Registers[address - REGS_GENERAL_BASE] = value;
+                break;
+            case COILS:
+                   MasterDB.General_Engine_Coils[address - COILS_GENERAL_BASE] = value;
+                break;
+            default:
+                //SHOULDNT HAPPEN
+                break;
+            }
+        }
+
+        break;
+
+
+    case LCD_CONTROL:
+        switch (slavename) {
+            case BEDROOM:
+                switch (addresstype) {
+                case ENGINE:
+                    MasterDB.LCD_Saloon_Engine[address - ENGINE_BASE] = value;
+                    break;
+                case DCSYS:
+                    MasterDB.LCD_Saloon_DCsys[address - DCSYSTEM_BASE] = value;
+
+                    break;
+                case ACSYS:
+                     MasterDB.LCD_Saloon_ACsys[address - ACSYSTEM_BASE] = value;
+                    break;
+                case HVAC:
+                     MasterDB.LCD_Saloon_HVAC[address - HVAC_BASE] = value;
+                    break;
+                case TANKS:
+                     MasterDB.LCD_Saloon_Tanks[address - TANKS_BASE] = value;
+                    break;
+                case RR:
+                   MasterDB.LCD_Saloon_RR[address - RR_BASE] = value;
+                    break;
+                case GPS:
+                 MasterDB.LCD_Saloon_GPS[address - GPS_BASE] = value;
+                    break;
+                case SONAR:
+                     MasterDB.LCD_Saloon_Sonar[address - SONAR_BASE] = value;
+                    break;
+                case LIGHTS:
+                     MasterDB.LCD_Saloon_Lights[address - LIGHTS_BASE] = value;
+                    break;
+                case LCD:
+                   MasterDB.LCD_Saloon_LCD[address - LCD_BASE] = value;
+                    break;
+                case GYRO:
+                    MasterDB.LCD_Saloon_Gyro[address - GYRO_BASE] = value;
+                    break;
+                case ALARM:
+                    MasterDB.LCD_Saloon_Alarm[address - ALARMS_BASE] = value;
+                    break;
+                case WARNING:
+                     MasterDB.LCD_Saloon_Warning[address - WARNINGS_BASE] = value;
+                    break;
+                default:
+                    //SHOULDN'T HAPPEN
+                    break;
+                    }
+
+            break;
+            case SALOON:
+            switch (addresstype) {
+            case ENGINE:
+                MasterDB.LCD_Saloon_Engine[address - ENGINE_BASE] = value;
+                break;
+            case DCSYS:
+                MasterDB.LCD_Saloon_DCsys[address - DCSYSTEM_BASE] = value;
+
+                break;
+            case ACSYS:
+                 MasterDB.LCD_Saloon_ACsys[address - ACSYSTEM_BASE] = value;
+                break;
+            case HVAC:
+                 MasterDB.LCD_Saloon_HVAC[address - HVAC_BASE] = value;
+                break;
+            case TANKS:
+                 MasterDB.LCD_Saloon_Tanks[address - TANKS_BASE] = value;
+                break;
+            case RR:
+               MasterDB.LCD_Saloon_RR[address - RR_BASE] = value;
+                break;
+            case GPS:
+             MasterDB.LCD_Saloon_GPS[address - GPS_BASE] = value;
+                break;
+            case SONAR:
+                 MasterDB.LCD_Saloon_Sonar[address - SONAR_BASE] = value;
+                break;
+            case LIGHTS:
+                 MasterDB.LCD_Saloon_Lights[address - LIGHTS_BASE] = value;
+                break;
+            case LCD:
+               MasterDB.LCD_Saloon_LCD[address - LCD_BASE] = value;
+                break;
+            case GYRO:
+                MasterDB.LCD_Saloon_Gyro[address - GYRO_BASE] = value;
+                break;
+            case ALARM:
+                MasterDB.LCD_Saloon_Alarm[address - ALARMS_BASE] = value;
+                break;
+            case WARNING:
+                 MasterDB.LCD_Saloon_Warning[address - WARNINGS_BASE] = value;
+                break;
+            default:
+                //SHOULDN'T HAPPEN
+                break;
+                }
+
+        break;
+      default:
+      //SHOULDNT HAPPEN
+      break;
+            }
+         }
+    return 1;
+    }
+
 
 int writeDB(char slavetype, char slavename, char addresstype){
 
@@ -441,6 +805,7 @@ int writeDB(char slavetype, char slavename, char addresstype){
 // Switch Case Slave Identifier (Location)
 // Switch Case Register Type
 // Writes Register and Coil Buffers to Master Database if value has not changed before
+// Also sets a flag if the value is new
     switch (slavetype) {
     case ENVIRONMENTAL_CONTROL:
         switch (slavename) {

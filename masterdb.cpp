@@ -143,20 +143,21 @@ int setslaveRTU(void){
 }
 
 int resetflags() {
+
     int i;
-    for (i=REGS_ENVC_BASE; i <= REG_ENVC_MAX; i++){
-        MasterDB.EC_Bedroom_Registers_Flag[i - REGS_ENVC_BASE]= 0;
-        MasterDB.EC_Saloon_Registers_Flag[i - REGS_ENVC_BASE] = 0;
+    for (i=0; i <= REG_ENVC_MAX - REGS_ENVC_BASE; i++){
+        MasterDB.EC_Bedroom_Registers_Flag[i]= 0;
+        MasterDB.EC_Saloon_Registers_Flag[i] = 0;
     }
     for (i= REG_ANALOG_IN12; i<= REG_GENERAL_MAX; i++)
         MasterDB.General_Engine_Registers_Flag[i - REG_ANALOG_IN12]=0;
     for (i= COILS_GENERAL_BASE; i <= COIL_GENERAL_MAX; i++)
         MasterDB.General_Engine_Coils_Flag[i - COILS_GENERAL_BASE]=0;
 
-    for (i= ENGINE_BASE; i<= REG_ENG_MAX; i++)
-        MasterDB.LCD_Saloon_Engine_Flag[i - ENGINE_BASE]=0;
-    for (i = DCSYSTEM_BASE; i<= REG_DCSYS_MAX; i++)
-        MasterDB.LCD_Saloon_DCsys_Flag[i - DCSYSTEM_BASE]=0;
+    for (i= 0; i<= REG_ENG_MAX - ENGINE_BASE; i++)
+        MasterDB.LCD_Saloon_Engine_Flag[i]=0;
+    for (i = 0; i<= REG_DCSYS_MAX - DCSYSTEM_BASE; i++)
+        MasterDB.LCD_Saloon_DCsys_Flag[i]=0;
     for (i= ACSYSTEM_BASE; i<= REG_ACSYS_MAX; i++)
         MasterDB.LCD_Saloon_ACsys_Flag[i - ACSYSTEM_BASE]=0;
     for (i=HVAC_BASE; i<= REG_HVAC_MAX; i++)
@@ -199,6 +200,7 @@ int pollslaves() {
     qWarning() << "Reading LCDs";
      for (int i = 0; LCDSlaveIDs[i] != 0;i++)
           //pass ID to modbusmanagement
+
           readLCDslave(LCDSlaveIDs[i],LCDSlaveName[i]);
 
 
@@ -296,34 +298,43 @@ int buildlcdDB()
 
     for (i = 0; i <=linkedlength; i++){
 
+
         lcdflag = (sendflagofDB(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
                                 Linked_DB[i].LCD_register.addresstype, Linked_DB[i].LCD_register.address));
+        if (lcdflag)
+        {
+            qWarning()<<"LCD Flag Has Been Recognised!";
+        }
+
 
         nonlcdflag = (sendflagofDB(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                                    Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address));
 
-    /*   if (lcdflag ^ nonlcdflag)
+     if (lcdflag != nonlcdflag)
         {
-         //   qWarning()<< "Non-Matching Linked!";
-         //   qWarning()<< nonlcdflag;
-            if (lcdflag)
-            {
+            qWarning()<< "Non-Matching Linked!";
 
-                senddatatoGUI(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
+            if (lcdflag > nonlcdflag)
+            {
+                qWarning() << "LCD Flag is the Trigger";
+                qWarning()<< Linked_DB[i].LCD_register.address;
+              buffer =  senddatatoGUI(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
                                         Linked_DB[i].LCD_register.addresstype,Linked_DB[i].LCD_register.address);
-           //         qWarning()<< buffer;
+                qWarning() << buffer;
               getqueuedata(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                            Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address,buffer);
 
             }else{
-             //   qWarning()<<i;
+                    qWarning() << "nonLCD Flag is the Trigger";
                 buffer = senddatatoGUI(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                                        Linked_DB[i].nonLCD_register.addresstype,Linked_DB[i].nonLCD_register.address);
+                qWarning() << buffer;
                 getqueuedata(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
                            Linked_DB[i].LCD_register.addresstype, Linked_DB[i].LCD_register.address, buffer);
 
             }
-        } */
+        }
+
     }
 
     //Finally, we write any data to LCDs that is always written to it (i.e. read-only data)
@@ -341,6 +352,7 @@ int buildlcdDB()
     }
 
     return 1;
+
 }
 
 int initialiseLCDlinks()
@@ -396,6 +408,8 @@ int initialiseLCDlinks()
     Linked_DB[13].LCD_register = {LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_BATTCURRENT};
     Linked_DB[13].nonLCD_register = {GENERAL_BOARD,GENERAL_ENGINE,REGISTERS,REG_BAT_FSD};
     linkedlength = 0;
+
+    return 0;
 }
 
 void getqueuedata(char slavetype, char slavename, char addresstype, int address, int value)
@@ -632,31 +646,31 @@ int sendflagofDB(char slavetype, char slavename, char addresstype, int address) 
 
             switch (addresstype) {
             case ENGINE:
-                return MasterDB.LCD_Saloon_Engine_Flag[address - 1];
+                return MasterDB.LCD_Saloon_Engine_Flag[address - ENGINE_BASE];
             case DCSYS:
-                return MasterDB.LCD_Saloon_DCsys_Flag[address - 1];
+                return MasterDB.LCD_Saloon_DCsys_Flag[address - DCSYSTEM_BASE];
             case ACSYS:
-                return MasterDB.LCD_Saloon_ACsys_Flag[address - 1];
+                return MasterDB.LCD_Saloon_ACsys_Flag[address - ACSYSTEM_BASE];
             case HVAC:
-                return MasterDB.LCD_Saloon_HVAC_Flag[address - 1];
+                return MasterDB.LCD_Saloon_HVAC_Flag[address - HVAC_BASE];
             case TANKS:
-                return MasterDB.LCD_Saloon_Tanks_Flag[address -1];
+                return MasterDB.LCD_Saloon_Tanks_Flag[address - TANKS_BASE];
             case RR:
-                return MasterDB.LCD_Saloon_RR_Flag[address - 1];
+                return MasterDB.LCD_Saloon_RR_Flag[address  - RR_BASE];
             case GPS:
-                return MasterDB.LCD_Saloon_GPS_Flag[address - 1];
+                return MasterDB.LCD_Saloon_GPS_Flag[address - GPS_BASE];
             case SONAR:
-                return MasterDB.LCD_Saloon_Sonar_Flag[address - 1];
+                return MasterDB.LCD_Saloon_Sonar_Flag[address - SONAR_BASE];
             case LIGHTS:
-                return MasterDB.LCD_Saloon_Lights_Flag[address - 1];
+                return MasterDB.LCD_Saloon_Lights_Flag[address- LIGHTS_BASE];
             case LCD:
-                return MasterDB.LCD_Saloon_LCD_Flag[address - 1];
+                return MasterDB.LCD_Saloon_LCD_Flag[address  - LCD_BASE];
             case GYRO:
-                return MasterDB.LCD_Saloon_Gyro_Flag[address - 1];
+                return MasterDB.LCD_Saloon_Gyro_Flag[address - GYRO_BASE];
             case ALARM:
-                return MasterDB.LCD_Saloon_Alarm_Flag[address - 1];
+                return MasterDB.LCD_Saloon_Alarm_Flag[address -  ALARMS_BASE];
             case WARNING:
-                return MasterDB.LCD_Saloon_Warning_Flag[address -1];
+                return MasterDB.LCD_Saloon_Warning_Flag[address - WARNINGS_BASE];
             break;
             }
 
@@ -717,31 +731,31 @@ int senddatatoGUI(char slavetype, char slavename, char addresstype, int address)
 
             switch (addresstype) {
             case ENGINE:
-                return MasterDB.LCD_Saloon_Engine[address - 1];
+                return MasterDB.LCD_Saloon_Engine[address - ENGINE_BASE];
             case DCSYS:
-                return MasterDB.LCD_Saloon_DCsys[address - 1];
+                return MasterDB.LCD_Saloon_DCsys[address - DCSYSTEM_BASE];
             case ACSYS:
-                return MasterDB.LCD_Saloon_ACsys[address - 1];
+                return MasterDB.LCD_Saloon_ACsys[address - ACSYSTEM_BASE];
             case HVAC:
-                return MasterDB.LCD_Saloon_HVAC[address - 1];
+                return MasterDB.LCD_Saloon_HVAC[address - HVAC_BASE];
             case TANKS:
-                return MasterDB.LCD_Saloon_Tanks[address -1];
+                return MasterDB.LCD_Saloon_Tanks[address - TANKS_BASE];
             case RR:
-                return MasterDB.LCD_Saloon_RR[address - 1];
+                return MasterDB.LCD_Saloon_RR[address - RR_BASE];
             case GPS:
-                return MasterDB.LCD_Saloon_GPS[address - 1];
+                return MasterDB.LCD_Saloon_GPS[address - GPS_BASE];
             case SONAR:
-                return MasterDB.LCD_Saloon_Sonar[address - 1];
+                return MasterDB.LCD_Saloon_Sonar[address - SONAR_BASE];
             case LIGHTS:
-                return MasterDB.LCD_Saloon_Lights[address - 1];
+                return MasterDB.LCD_Saloon_Lights[address - LIGHTS_BASE];
             case LCD:
-                return MasterDB.LCD_Saloon_LCD[address - 1];
+                return MasterDB.LCD_Saloon_LCD[address - LCD_BASE];
             case GYRO:
-                return MasterDB.LCD_Saloon_Gyro[address - 1];
+                return MasterDB.LCD_Saloon_Gyro[address - GYRO_BASE];
             case ALARM:
-                return MasterDB.LCD_Saloon_Alarm[address -1];
+                return MasterDB.LCD_Saloon_Alarm[address - ALARMS_BASE];
             case WARNING:
-                return MasterDB.LCD_Saloon_Warning[address -1];
+                return MasterDB.LCD_Saloon_Warning[address -WARNINGS_BASE];
             break;
             }
 
@@ -1034,8 +1048,14 @@ int writeDB(char slavetype, char slavename, char addresstype){
                 case HVAC:
                     for (i=0; i<= (REG_HVAC_MAX - HVAC_BASE); i++)
                         if ((MasterDB.LCD_Saloon_HVAC_Flag[i]== 0) && (MasterDB.LCD_Saloon_HVAC[i] != register_buffer[i])){
+                            qWarning()<<"HVAC Value Changed!";
+                            qWarning()<< register_buffer[i];
+                            qWarning()<< i;
+
+                            qWarning()<< (REG_HVAC_SALNSETTEMP - HVAC_BASE);
                         MasterDB.LCD_Saloon_HVAC[i] = register_buffer[i];
                         MasterDB.LCD_Saloon_HVAC_Flag[i] = 1;
+
                         }
                     break;
                 case TANKS:

@@ -510,9 +510,9 @@ Temperature</string>
     <widget class="QLabel" name="control_displayco2limit">
      <property name="geometry">
       <rect>
-       <x>380</x>
+       <x>360</x>
        <y>0</y>
-       <width>51</width>
+       <width>91</width>
        <height>31</height>
       </rect>
      </property>

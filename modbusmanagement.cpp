@@ -41,6 +41,7 @@ int readLCDslave(int IDnumber, char slavename){
 
     //Attempts to read from each block of registers
     //If successful, writes the read buffer to master DB
+
     setmodbusslave((IDnumber));
 
     if (readaddresses(ENGINE_BASE -1,REG_ENG_MAX - ENGINE_BASE))

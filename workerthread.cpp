@@ -24,9 +24,7 @@ void workerthread::run()
         while(1){
 
          qWarning() << "WT:Polling Slaves";
-         processqueue();
          pollslaves();
-         processqueue();
          managelcd();
          processqueue();
 

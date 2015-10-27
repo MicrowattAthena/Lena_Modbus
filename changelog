@@ -6,13 +6,17 @@ Future Changes:
 	The worker-thread needs to set a signal when connected to modbus and a full read of slaves is done: Then the GUI can be displayed.
 	A loading screen needs to be displayed beforehand.
 	
-	Management of LCD needs to be finished - buildLCDdb must be worked out. Put in a check for zero value registers?
 	Alarm States must be managed (display on front page)
 	
 	Need to Discuss what the min/max values should be for engine general board values
 
-Current Version: V.0.1.4
+Current Version: V.0.1.5
 	
+	V 0.1.5 - 27/10/2015
+
+		User Input through all slaves now works correctly - changes propogated to other slaves and MasterDB.
+		All Functions are essentially complete - Potential tweaks to timing could be done.
+
 	V 0.1.4 - 27/10/2015
 
 		Linked List tested and functional, alarms and warnings now working. 

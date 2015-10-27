@@ -11,8 +11,13 @@ Future Changes:
 	
 	Need to Discuss what the min/max values should be for engine general board values
 
-Current Version: V.0.1.3
+Current Version: V.0.1.4
 	
+	V 0.1.4 - 27/10/2015
+
+		Linked List tested and functional, alarms and warnings now working. 
+		Managing User Input through LCD slaves needs to be looked at - causing nonsense values to be sent. Commented out temporarily
+			
 	V 0.1.3 - 26/10/2015
 
 		Linked List Now Populated

@@ -108,6 +108,8 @@ int readcoils(int initialaddress, int numberofcoils){
 
 int setmodbusslave(int id){
     modbus_set_slave(ctx,id);
+   qWarning() << "Slave ID:";
+    qWarning() << id;
 
     return 1;
 }
@@ -134,6 +136,8 @@ do {
     }else{
         retries--;
         qWarning() << "Failed to Write, re-attempting";
+        qWarning() << address;
+        qWarning() << length;
     }
 }
 while( retries >  0);

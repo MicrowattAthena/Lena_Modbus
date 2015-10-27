@@ -125,6 +125,9 @@ struct queuefile {
    struct linked_registers Linked_DB[50];
    int linkedlength;
 
+  int SenttoLCD[4] = {5,6,7,8};
+  int SizeofSenttoLCD = 3;
+
 struct database MasterDB;
 int setslaveRTU(void){
 
@@ -208,7 +211,7 @@ int managelcd() {
     //The program needs to set the correct values to the LCD DB and then rewrite to the LCDs.
 
     buildlcdDB();
-    managelcdalarms();
+//    managelcdalarms();
     return 1;
 }
 
@@ -223,55 +226,55 @@ int managelcdalarms()
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_TEMPSENSOR);
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_HITEMPWARN);
     updateDB(LCD_CONTROL,SALOON,WARNING,COIL_WARN_HIGHTEMP,(buffer > buffer2));
-    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_WARN_HIGHTEMP, (buffer > buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,WARNING,COIL_WARN_HIGHTEMP, (buffer > buffer2));
 
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,ENGINE,REG_ENG_HITEMPALRM);
     updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_HIGHTEMP,(buffer > buffer2));
-    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_HIGHTEMP, (buffer > buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_HIGHTEMP, (buffer > buffer2));
 
     // Portable Water Coils
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATSTATUS);
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATWARN);
     updateDB(LCD_CONTROL,SALOON,WARNING,COIL_WARN_POTWATERLOW, (buffer < buffer2));
-    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_WARN_POTWATERLOW, (buffer < buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,WARNING,COIL_WARN_POTWATERLOW, (buffer < buffer2));
 
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_POTWATALARM);
     updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_POTWATERLOW, (buffer < buffer2));
-    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_POTWATERLOW, (buffer < buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_POTWATERLOW, (buffer < buffer2));
 
     // Waste Water Coil
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSWATSTATUS);
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSWATALARM);
     updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEWATHIGH, (buffer > buffer2));
-    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEWATHIGH, (buffer > buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEWATHIGH, (buffer > buffer2));
 
     // Waste Filler Coil
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSFILLSTATUS);
     buffer2 = senddatatoGUI(LCD_CONTROL,SALOON,TANKS,REG_TANKS_WSFILLALARM);
     updateDB(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEFILLLOW, (buffer < buffer2));
-    writequeue(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEFILLLOW, (buffer < buffer2));
+    getqueuedata(LCD_CONTROL,SALOON,WARNING,COIL_ALRM_WASTEFILLLOW, (buffer < buffer2));
 
     //Inverter Fault Coil
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTERFAULT);
     updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVFAULT, (buffer > 0));
-    writequeue(LCD_CONTROL, SALOON,ALARM,COIL_ALRM_INVFAULT, (buffer > 0));
+    getqueuedata(LCD_CONTROL, SALOON,ALARM,COIL_ALRM_INVFAULT, (buffer > 0));
 
     //Inverter Low Battery
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS, REG_DCSYS_INVERTLOWBATT);
     updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVLOWBAT, (buffer > 0));
-    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVLOWBAT, (buffer > 0));
+    getqueuedata(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVLOWBAT, (buffer > 0));
 
     //Inverter Overload
 
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTOVERLOAD);
     updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
-    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
+    getqueuedata(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
 
     //Inverter Overtemp
 
     buffer = senddatatoGUI(LCD_CONTROL,SALOON,DCSYS,REG_DCSYS_INVERTOVERTEMP);
     updateDB(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERTEMP, (buffer > 0));
-    writequeue(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
+    getqueuedata(LCD_CONTROL,SALOON,ALARM,COIL_ALRM_INVOVERLOAD, (buffer > 0));
 
     //Bilge Pump Run Long
    // Uhh whats the condition for this?
@@ -288,8 +291,6 @@ int buildlcdDB()
     //If one value has changed (i.e. it has been overwritten outside the program),
      this changed value must be written to the other slave */
 
-    //For some reason the senddatatoGUI function causes the program to crash. The function runs fine, but when it attempts to
-    //to return to this function, it fails. However, it works fine when called from a different function (?)
     int i; int lcdflag; int nonlcdflag;
     uint buffer;
 
@@ -301,36 +302,51 @@ int buildlcdDB()
         nonlcdflag = (sendflagofDB(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                                    Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address));
 
-     /*   if (lcdflag ^ nonlcdflag)
+    /*   if (lcdflag ^ nonlcdflag)
         {
-            qWarning()<< "Non-Matching Linked!";
-            qWarning()<< nonlcdflag;
+         //   qWarning()<< "Non-Matching Linked!";
+         //   qWarning()<< nonlcdflag;
             if (lcdflag)
             {
 
                 senddatatoGUI(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
                                         Linked_DB[i].LCD_register.addresstype,Linked_DB[i].LCD_register.address);
-                    qWarning()<< buffer;
-              writequeue(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
+           //         qWarning()<< buffer;
+              getqueuedata(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                            Linked_DB[i].nonLCD_register.addresstype, Linked_DB[i].nonLCD_register.address,buffer);
 
             }else{
-                qWarning()<<i;
+             //   qWarning()<<i;
                 buffer = senddatatoGUI(Linked_DB[i].nonLCD_register.slavetype,Linked_DB[i].nonLCD_register.slavename,
                                        Linked_DB[i].nonLCD_register.addresstype,Linked_DB[i].nonLCD_register.address);
-                writequeue(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
+                getqueuedata(Linked_DB[i].LCD_register.slavetype,Linked_DB[i].LCD_register.slavename,
                            Linked_DB[i].LCD_register.addresstype, Linked_DB[i].LCD_register.address, buffer);
 
             }
         } */
     }
 
+    //Finally, we write any data to LCDs that is always written to it (i.e. read-only data)
+   // qWarning()<< "Writing LCD Readonly Data";
+    int x; int y;
+    for (x = 0; x<=SizeofSenttoLCD; x++)
+
+    {
+        y = SenttoLCD[x];
+        buffer = senddatatoGUI(Linked_DB[y].nonLCD_register.slavetype,Linked_DB[y].nonLCD_register.slavename,
+                               Linked_DB[y].nonLCD_register.addresstype,Linked_DB[y].nonLCD_register.address);
+       // qWarning()<< buffer;
+        getqueuedata(Linked_DB[y].LCD_register.slavetype,Linked_DB[y].LCD_register.slavename,
+                   Linked_DB[y].LCD_register.addresstype, Linked_DB[y].LCD_register.address, buffer);
+    }
 
     return 1;
 }
 
 int initialiseLCDlinks()
 {
+    //Lists elements that are always written to LCD slaves, i.e. read-only on slave
+
 
     // Creates a link betweeen LCD registers and other registers
 
@@ -440,11 +456,10 @@ void processqueue(){
 
     // Writes queue files to slaves, and checks if the addresses are linked.
     // If so, it also writes the value to the linked address.
-    // NEEDS TO BE TESTED
+
     qWarning()<< "Processing Queue";
 
     uint i; uint y;
-    qWarning()<< queuecounter;
     for (i = queuecounter;i > 0; i--)
     {    
         qWarning()<< GUIqueuefile[i].addresstype;
@@ -455,19 +470,19 @@ void processqueue(){
 
          if (GUIqueuefile[i].slavetype == LCD_CONTROL)
             {
-             qWarning()<<"Checking for link in LCD CONTROL";
+           //  qWarning()<<"Checking for link in LCD CONTROL";
               if ((GUIqueuefile[i].addresstype == Linked_DB[y].LCD_register.addresstype) && (GUIqueuefile[i].address == Linked_DB[y].LCD_register.address))
                 {
-                 qWarning() << "Link in LCD Control found!";
+             //    qWarning() << "Link in LCD Control found!";
                  writequeue(Linked_DB[y].nonLCD_register.slavetype, Linked_DB[y].nonLCD_register.slavename,
                             Linked_DB[y].nonLCD_register.addresstype, Linked_DB[y].nonLCD_register.address, GUIqueuefile[i].value);
                 }
           }else{
-            qWarning()<< "Checking for link in nonLCD CONTROL";
+           // qWarning()<< "Checking for link in nonLCD CONTROL";
 
             if ((GUIqueuefile[i].addresstype == Linked_DB[y].nonLCD_register.addresstype) && (GUIqueuefile[i].address == Linked_DB[y].nonLCD_register.address))
                 {
-                 qWarning() << "Link in NONLCD Control found!";
+             //    qWarning() << "Link in NONLCD Control found!";
                  writequeue(Linked_DB[y].LCD_register.slavetype, Linked_DB[y].LCD_register.slavename,
                             Linked_DB[y].LCD_register.addresstype, Linked_DB[y].LCD_register.address, GUIqueuefile[i].value);
                  }
@@ -546,8 +561,7 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
                 write_single_coil(address - 1, value);
                 break;
             default:
-                qWarning()<< "Writing to LCD 1";
-                             qWarning() << address -1;
+
                 write_single_register(address - 1,value);
                 break;
             break;
@@ -562,8 +576,7 @@ int writequeue(char slavetype, char slavename, char addresstype, int address, in
         write_single_coil(address - 1, value);
         break;
     default:
-         qWarning()<< "Writing to LCD 1";
-                      qWarning() << address -1;
+
         write_single_register(address - 1,value);
         break;
     break;
